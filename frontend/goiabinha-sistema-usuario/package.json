@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@material-ui/core": "^4.12.3",
+    "@mui/material": "^5.0.0-rc.0",
     "@nodelib/fs.walk": "^1.2.8",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

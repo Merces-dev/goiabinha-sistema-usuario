@@ -45,11 +45,11 @@ tbody, tbody tr, tbody tr th{
 .colunaBotoes button{
     padding: 8px;
     margin: 3px;
+    width: 35px;
     border-width: 0;
     cursor: pointer;
 }
 .iconBotoes{
     color: white;
-    height:15px;
-    width:15px
+    font-size: 12px;
 }
