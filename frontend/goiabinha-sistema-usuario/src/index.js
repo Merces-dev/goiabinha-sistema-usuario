@@ -3,12 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+//Pages
+import Home from './pages/Home'
+import Gerenciador from './pages/Gerenciador';
+
+const routing = (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Home}/>
+      <Route  path="/gerenciamento" component={Gerenciador}/>
+    </Switch>
+  </Router>
+);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  {routing}
+  , document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
