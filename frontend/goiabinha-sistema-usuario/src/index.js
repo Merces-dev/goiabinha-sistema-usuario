@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
+
 import reportWebVitals from './reportWebVitals';
 //Pages
 import Home from './pages/Home'
@@ -17,8 +19,10 @@ const routing = (
 );
 
 ReactDOM.render(
-  {routing}
-  , document.getElementById('root')
+  <ToastProvider>
+    {routing}
+  </ToastProvider>, 
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,23 @@
+.header {
+    height: 100px;
+    background-color: #545151;
+}
+
+.centralHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.linksHeader a {
+    color: white;
+    font-style: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.linksHeader a:hover {
+    opacity: 70%
+}

@@ -1,0 +1,15 @@
+.centralHome{
+    display:flex;
+    align-items: center;
+    justify-content:center;
+}
+.centralHome div {
+    padding:50px;
+    margin:20px;
+    background-color:grey;
+}
+.centralHome div a{
+    margin:50px;
+    color:white;
+    text-decoration: none;
+}
