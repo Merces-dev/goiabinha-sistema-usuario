@@ -1,7 +1,13 @@
 
 import React, { useEffect, useState } from 'react'
-import Header from './../../components/header'
+
+
 import {useToasts} from 'react-toast-notifications'
+
+//* Importando Componentes
+import Header from './../../components/header'
+import Footer from './../../components/footer'
+
 //* Importando botões com Ícones
 import {FaTrashAlt, FaPencilAlt} from 'react-icons/fa'
 
@@ -221,12 +227,14 @@ const Gerenciador = () => {
                             <label>
                             <input   value={dataNascimento} onChange={event => setDataNascimento(event.target.value)}  type="date" placeholder='Sexo'  />
                             </label>
-                            <input  style={{backgroundColor:'white', color:'red'}} type='submit' value='Salvar'></input>
+                            <input className='buttonCrud' type='submit' value='Salvar'></input>
 
                         </form>
                     </div>
                 </div>
             </div>
+            <Footer/>
+
         </div>
         
     )

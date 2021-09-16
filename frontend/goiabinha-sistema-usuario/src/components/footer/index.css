@@ -1,0 +1,38 @@
+.footer {
+    background-color: var(--cinzaescuro);
+    flex-direction: column;
+    height: auto;
+}
+
+.centralFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 150px;
+}
+
+.linksFooter a {
+    color: white;
+    font-style: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.linksFooter a:hover {
+    opacity: 70%
+}
+.subFooter{
+    width: 100%;
+    height:50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.subFooter p{
+    color: white
+}
+.subFooter a{
+    color: var(--laranja);
+    text-decoration: none;
+}

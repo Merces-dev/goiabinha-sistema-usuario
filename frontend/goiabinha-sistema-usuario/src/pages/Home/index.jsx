@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from './../../components/header'
+import Footer from './../../components/footer'
+
 import './index.css'
 const Home = () => {
     return(
@@ -14,6 +16,8 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
+
         </div>
     )
 };
