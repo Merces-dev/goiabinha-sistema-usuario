@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'
-import { useToasts } from 'react-toast-notifications';
+import React from 'react';
+
 import '../header/index.css';
 
 
@@ -10,7 +9,7 @@ const Header = () => {
         <div className='header total'>
             <div className='width85 centralHeader'>
                 <a href='/'>
-                <img  src="https://www.intelitrader.com.br/assets/logo.svg"/>
+                <img  src="https://www.intelitrader.com.br/assets/logo.svg" alt='Logo da empresa Intelitrader'/>
                 </a>
                 <div className='linksHeader'>
                     <a href="/gerenciamento">Gerenciamento de Usuários</a>

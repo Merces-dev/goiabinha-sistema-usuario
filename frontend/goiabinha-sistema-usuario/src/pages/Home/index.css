@@ -6,7 +6,7 @@
 .centralHome div {
     padding:50px;
     margin:20px;
-    background-color:grey;
+    background-color:var(--cinzaescuro);
 }
 .centralHome div a{
     margin:50px;

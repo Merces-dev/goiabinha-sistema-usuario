@@ -1,14 +1,14 @@
 
 import React, { useEffect, useState } from 'react'
 import Header from './../../components/header'
-import {Button} from 'react-bootstrap'
-//Importando botões com Ícones
+import {useToasts} from 'react-toast-notifications'
+//* Importando botões com Ícones
 import {FaTrashAlt, FaPencilAlt} from 'react-icons/fa'
 
-//Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
+//* Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
 import { url } from '../../utils/constants'
 
-//Importando CSS
+//* Importando CSS
 import './index.css'
 
 const Gerenciador = () => {
@@ -18,24 +18,30 @@ const Gerenciador = () => {
     const [dataNascimento, setDataNascimento] = useState('');
     const [sexo, setSexo] = useState('');
     const [usuarios, setUsuarios] = useState([]);
+    const {addToast} = useToasts();
 
     useEffect(() =>{
-        listarUsuarios()
-    },[]);
+        listarUsuarios();
+    }, [])
 
-    // Método que adiciona um novo usuário
+
+    //* Método que adiciona um novo usuário
     const adicionarUsuario = (event) =>{
         event.preventDefault();
 
+        // Especifica o objeto usuario
         let usuario = {
             nome: nome,
             dataNascimento: dataNascimento,
             sexo: sexo,
         }
 
+        // Caso o idUsuario seja igual a vazio, o método utilizado será um POST, caso contrário será um PUT
         let method = (idUsuario === '' ? 'POST' : 'PUT');
         let urlRequest = (idUsuario === '' ? url + '/Usuarios' : url + '/Usuarios/' + idUsuario);
 
+        // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
+        // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
         fetch(urlRequest, {
             method: method,
             headers :{
@@ -46,51 +52,76 @@ const Gerenciador = () => {
         .then(response => response.json())
         .then(response => {
             console.log(response)
-            alert('Usuario Salvo!');
+            if(method === 'POST'){
+                addToast((<em>Usuário adicionado</em>), {appearance:'success', autoDismiss : true});
+
+            }else if(method === 'PUT'){
+                addToast((<em>Dados do usuário atualizados</em>), {appearance:'success', autoDismiss : true});
+
+            }
             listarUsuarios();
+            stateContainer();
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err)
+            addToast(err, {appearance:'error', autoDismiss : true});
+        });
+
     }
 
-    // Método que atualiza as informações de um usuario de acordo com seu Id
+
+
+    //* Método que atualiza as informações de um usuario de acordo com seu Id
     const atualizarUsuario = (event) =>{
+        event.preventDefault()
+        if(event.target.value !== undefined){
 
+        const idUsuario = event.target.value;
+
+        // Lista o usuário de acordo com seu id e dá valor as variáveis do objeto usuario
+        listarUsuario(idUsuario);
+        stateContainer();
+    }else{
+        addToast((<em>Usuario não encontrado, tente novamente!</em>), {appearance:'info', autoDismiss : true});
+    }
     }
 
-    // Método que exclui um usuario e suas informações de acordo com seu Id
+    //* Método que exclui um usuario e suas informações de acordo com seu Id
     const excluirUsuario = (event) =>{
-        if(event.target.value != undefined){
+        if(event.target.value !== undefined){
+
+            // Busca a exclusão do usuário de acordo com o valor definido no input
             fetch(`${url}/Usuarios/${event.target.value}`, {
                 method: 'DELETE',
-                //TO-DO 
+                //TODO:
                 // Adicionar authorization com bearer token
             })
             .then(response => response.json())
-            .then(dados => {
-                console.log(event.target.value)
-    
-                alert('Usuario removido!');
+            .then(dados => {    
+                addToast((<em>Usuario removido!</em>), {appearance:'success', autoDismiss : true});
                 listarUsuarios();
             })
             .catch(err => console.error(err));
         }else{
-            alert('Usuario não encontrado, tente novamente!');  
+            addToast((<em>Usuario não encontrado, tente novamente!</em>), {appearance:'info', autoDismiss : true});
         }
   
     }
 
-    // Método que lista um usuario e suas informações de acordo com seu Id
+    //* Método que lista um usuario e suas informações de acordo com seu Id
     const listarUsuario = (id) =>{
         fetch(`${url}/Usuarios/${id}`)
         .then(response => response.json())
         .then(dados => {
-            setUsuarios(dados);
-            console.log(usuarios)
+            setIdUsuario(dados.id);
+            setNome(dados.nome);
+            setDataNascimento(dados.dataNascimento);
+            setSexo(dados.sexo);
         })
         .catch(err => console.error(err));
     }
 
-    // Método que lista todos os usuários e suas informações
+    //* Método que lista todos os usuários e suas informações
     const listarUsuarios = () =>{
         fetch(`${url}/Usuarios`)
         .then(response => response.json())
@@ -102,15 +133,24 @@ const Gerenciador = () => {
 
     }
 
+    //* Método utilizado para abrir o container de Adicionar Usuário ou Atualizar
     const stateContainer = () =>{
         let cont = document.getElementById('idContainerInfo');
         if (cont.style.display === "flex") {
             cont.style.display = "none";
+            zerarVariavies();
 
         } else {
             cont.style.display = "flex";
 
         }
+    }
+
+    const zerarVariavies =  () => {
+        setIdUsuario('');
+        setNome('');
+        setSexo('');
+        setDataNascimento('');
     }
 
     return(
@@ -141,16 +181,17 @@ const Gerenciador = () => {
 
                                 <tbody>
                                     {
-                                    // Função que faz a listagem de todos os usuários em forma de lista
+                                    //*  Função que faz a listagem de todos os usuários em forma de lista
                                     usuarios.map((item, index) => {
                                             return(
-                                            <tr key={index}>
-                                                <th>{item.id}</th>
+                                            <tr className='linhaTabela' key={index}>
+                                                <th className='elementoTabela'>{item.id}</th>
                                                 <th>{item.nome}</th>
                                                 <th>{item.dataNascimento}</th>
+
                                                 <th>{item.sexo}</th>
                                                 <th className='colunaBotoes'>
-                                                    <button style={{backgroundColor:'#0abab5'}} value={item.id} onClick={stateContainer} ><FaPencilAlt className='iconBotoes'/></button>
+                                                    <button style={{backgroundColor:'#0abab5'}} value={item.id} onClick={event => atualizarUsuario(event)} ><FaPencilAlt className='iconBotoes'/></button>
                                                     <button style={{backgroundColor:'#ff3333'}} value={item.id} onClick={event => excluirUsuario(event)}><FaTrashAlt className='iconBotoes'/></button>
                                                
                                                 </th>

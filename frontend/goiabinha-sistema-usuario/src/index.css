@@ -21,3 +21,8 @@ body {
   justify-content: center;
   align-items: center;
 }
+:root{
+  --laranja: #FE7B1D;
+  --cinzamedio:#dcd8d8;
+  --cinzaescuro:#535556;
+}

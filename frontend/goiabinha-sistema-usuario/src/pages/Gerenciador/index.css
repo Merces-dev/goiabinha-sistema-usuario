@@ -10,7 +10,7 @@
 }
 
 .buttonCrud {
-    background-color: #FE7B1D;
+    background-color: var(--laranja);
     color: #fff;
     font-weight: 700;
     padding: 8px;
@@ -30,10 +30,10 @@
 thead,
 thead tr,
 thead tr td {
-    background-color: #dcd8d8;
+    background-color: var(--cinzamedio);
     padding: 10px;
-    color: #535556;
-    border-bottom: 1px solid #535556;
+    color: var(--cinzaescuro);
+    border-bottom: 1px solid var(--cinzaescuro);
 
 
 }
@@ -41,15 +41,16 @@ thead tr td {
 tbody,
 tbody tr,
 tbody tr th {
-    background-color: #dcd8d8;
+    background-color: #efeded;
     padding: 10px;
-    color: #535556;
-    border-bottom: 1px solid #535556;
+    color: var(--cinzaescuro);
+    border-bottom: 1px solid var(--cinzaescuro);
     text-align: start;
 
 }
-
-
+.linhaTabela th:nth-of-type(){
+    background-color:red    
+}
 .colunaBotoes button {
     padding: 8px;
     margin: 3px;
@@ -65,16 +66,16 @@ tbody tr th {
 
 /* Box Usuario */
 #idContainerInfo {
-    width: 500px;
+    width: 300px;
     padding: 20px;
-    height: 500px;
-    background-color: #dcd8d8;
+    height: 400px;
+    background-color: var(--cinzamedio);
     position: fixed;
     top: 50%;
     /* position the top  edge of the element at the middle of the parent */
     left: 50%;
     /* position the left edge of the element at the middle of the parent */
-    border: 1px solid #535556;
+    border: 1px solid var(--cinzaescuro);
     transform: translate(-50%, -50%);
     flex-direction: column;
     display: none;
@@ -101,6 +102,10 @@ tbody tr th {
     padding:20px;
     width:20px;
     height:20px;
+    background-color: var(--laranja);
+    color: white;
+    border: 0;
+    cursor: pointer
 }
 .stateContainer{
     display:flex;
