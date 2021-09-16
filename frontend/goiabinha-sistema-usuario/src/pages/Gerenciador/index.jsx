@@ -1,10 +1,9 @@
 
 import React, { useEffect, useState } from 'react'
 import Header from './../../components/header'
-
+import {Button} from 'react-bootstrap'
 //Importando botões com Ícones
 import {FaTrashAlt, FaPencilAlt} from 'react-icons/fa'
-
 
 //Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
 import { url } from '../../utils/constants'
@@ -13,7 +12,6 @@ import { url } from '../../utils/constants'
 import './index.css'
 
 const Gerenciador = () => {
-
     // Declarando Variáveis
     const [idUsuario, setIdUsuario] = useState('');
     const [nome, setNome] = useState('');
@@ -26,13 +24,29 @@ const Gerenciador = () => {
     },[]);
 
     // Método que adiciona um novo usuário
-    const adicionarUsuario = () =>{
-        fetch(`${url}/Usuarios`, {
-            method: 'POST',
+    const adicionarUsuario = (event) =>{
+        event.preventDefault();
+
+        let usuario = {
+            nome: nome,
+            dataNascimento: dataNascimento,
+            sexo: sexo,
+        }
+
+        let method = (idUsuario === '' ? 'POST' : 'PUT');
+        let urlRequest = (idUsuario === '' ? url + '/Usuarios' : url + '/Usuarios/' + idUsuario);
+
+        fetch(urlRequest, {
+            method: method,
+            headers :{
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(usuario)
         })
         .then(response => response.json())
-        .then(dados => {
-            alert('Usuario Alterado!');
+        .then(response => {
+            console.log(response)
+            alert('Usuario Salvo!');
             listarUsuarios();
         })
         .catch(err => console.error(err));
@@ -40,17 +54,7 @@ const Gerenciador = () => {
 
     // Método que atualiza as informações de um usuario de acordo com seu Id
     const atualizarUsuario = (event) =>{
-        fetch(`${url}/Usuarios/${event.target.value}`, {
-            method: 'PUT',
-            //TO-DO 
-            // Adicionar authorization com bearer token
-        })
-        .then(response => response.json())
-        .then(dados => {
-            alert('Usuario Alterado!');
-            listarUsuarios();
-        })
-        .catch(err => console.error(err));
+
     }
 
     // Método que exclui um usuario e suas informações de acordo com seu Id
@@ -98,6 +102,17 @@ const Gerenciador = () => {
 
     }
 
+    const stateContainer = () =>{
+        let cont = document.getElementById('idContainerInfo');
+        if (cont.style.display === "flex") {
+            cont.style.display = "none";
+
+        } else {
+            cont.style.display = "flex";
+
+        }
+    }
+
     return(
         <div>
             <Header/>
@@ -109,7 +124,7 @@ const Gerenciador = () => {
                     <hr/>
                     <div className='crudBox'>
                         <div>
-                            <button  className='buttonCrud'>Adicionar Usuário</button>
+                            <button onClick={stateContainer} className='buttonCrud'>Adicionar Usuário</button>
 
                         </div>
                         <div>
@@ -135,7 +150,7 @@ const Gerenciador = () => {
                                                 <th>{item.dataNascimento}</th>
                                                 <th>{item.sexo}</th>
                                                 <th className='colunaBotoes'>
-                                                    <button style={{backgroundColor:'#0abab5'}} value={item.id} onClick={event => atualizarUsuario(event)} ><FaPencilAlt className='iconBotoes'/></button>
+                                                    <button style={{backgroundColor:'#0abab5'}} value={item.id} onClick={stateContainer} ><FaPencilAlt className='iconBotoes'/></button>
                                                     <button style={{backgroundColor:'#ff3333'}} value={item.id} onClick={event => excluirUsuario(event)}><FaTrashAlt className='iconBotoes'/></button>
                                                
                                                 </th>
@@ -149,9 +164,30 @@ const Gerenciador = () => {
                             </table>
                         </div>
                     </div>
+                    <div id="idContainerInfo">
+                        <div className='stateContainer'>
+                            <button onClick={stateContainer}>X</button>
+                        </div>
+                    <form className='containerInputs' onSubmit={adicionarUsuario}>
+                            <label>
+                                <input maxLength='50' value={nome} onChange={event => setNome(event.target.value)}  type="text" placeholder='Nome' required />
+                            </label>
+
+                            <label>
+                            <input   value={sexo} onChange={event => setSexo(event.target.value)}  type="text" placeholder='Sexo'  />
+                            </label>
+                                        
+                            <label>
+                            <input   value={dataNascimento} onChange={event => setDataNascimento(event.target.value)}  type="date" placeholder='Sexo'  />
+                            </label>
+                            <input  style={{backgroundColor:'white', color:'red'}} type='submit' value='Salvar'></input>
+
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+        
     )
 
 };
