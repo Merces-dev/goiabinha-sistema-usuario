@@ -131,52 +131,7 @@ tbody tr th {
 }
 
 
-/* Box Alerta */
 
-
-#alerta {
-    width: 300px;
-    height: auto;
-    background-color: var(--cinzamedio);
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-    position: fixed;
-    top: 10%;
-    right: 3%;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-}
-
-.subDivAlerta {
-    width: 100%;
-    background-color: var(--laranja);
-    display: flex;
-    justify-content: space-between;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-}
-
-.subDivAlerta button {
-    padding: 5px 15px;
-    background-color: var(--laranja);
-    border: 0;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
-}
-
-.subDivAlerta p {
-    color: white;
-    padding: 10px 15px
-}
-
-.infoAlerta p {
-    color: var(--cinzaescuro);
-    text-align: start;
-    padding: 10px 15px
-}
 
 @media (max-width: 450px) {
 

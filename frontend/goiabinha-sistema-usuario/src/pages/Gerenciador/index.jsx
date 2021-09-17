@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 //* Importando Componentes
 import Header from './../../components/header'
 import Footer from './../../components/footer'
-
+import Modal from './../../components/modal'
 //* Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
 import { url } from '../../utils/constants'
 
@@ -18,6 +18,8 @@ const Gerenciador = () => {
     const [dataNascimento, setDataNascimento] = useState('');
     const [sexo, setSexo] = useState('');
     const [usuarios, setUsuarios] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [mensagem, setMensagem] = useState('');
 
     useEffect(() =>{
         listarUsuarios();
@@ -53,7 +55,8 @@ const Gerenciador = () => {
                 .then(response => response.json())
                 .then(response => {
                     console.log(response)
-                    alert('Dados do usuário atualizados');
+                    setMensagem('Usuário atualizado com sucesso')
+                    setIsModalVisible(true);     
                     listarUsuarios();
                     stateContainer();
                 })
@@ -76,7 +79,9 @@ const Gerenciador = () => {
             .then(response => response.json())
             .then(response => {
                 console.log(response)
-                alert('Usuário adicionado');
+                setMensagem('') 
+                setMensagem('Usuário adicionado com sucesso')
+                setIsModalVisible(true);                
                 listarUsuarios();
                 stateContainer();
             })
@@ -111,7 +116,7 @@ const Gerenciador = () => {
     const excluirUsuario = (event) =>{
             // Busca a exclusão do usuário de acordo com o valor definido no input
             if(event.target.value !== undefined){
-                if (window.confirm('Deseja mesmo apagar este usuário ?')) { 
+                if (window.confirm('Deseja mesmo excluir este usuário ?')) { 
 
                     fetch(`${url}/Usuarios/${event.target.value}`, {
                         method: 'DELETE',
@@ -121,13 +126,20 @@ const Gerenciador = () => {
                     .then(response => response.json())
                     .then(dados => {    
                         listarUsuarios();
+
+                        //Mensagem do modal
+                        setMensagem('') 
+                        setMensagem('Usuário excluso com sucesso.')
+                        //Estado do modal
+                        setIsModalVisible(true);
                     })
                     .catch(err => console.error(err));
 
                 }
         }else{
-            alert('Usuario não encontrado, tente novamente!');
-        }
+            setMensagem('') 
+            setMensagem('Usuário não encontrado, tente novamente.')
+            setIsModalVisible(true);        }
   
     }
 
@@ -247,16 +259,12 @@ const Gerenciador = () => {
 
                         </form>
                     </div>
-                    <div id="alerta"className='arredondamento '>
-                        <div className='subDivAlerta arredondamento'>
-                             <p>Informação Intelitrader</p>
-                             <button className='arredondamento' /*onClick={stateAlerta}*/>X</button> 
-                        </div>
-                        <div className='infoAlerta'>
-                            <p>O usuario foi cadastrado com sucesso</p>
-                        </div>
-                    </div>
+
+
                 </div>
+                {isModalVisible?(
+                    <Modal onClose={ () => setIsModalVisible(false)} children={mensagem} />
+                ): null}
             </div>
             <Footer/>
 
