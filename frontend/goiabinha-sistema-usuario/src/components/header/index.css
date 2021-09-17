@@ -21,3 +21,12 @@
 .linksHeader a:hover {
     opacity: 70%
 }
+@media (max-width: 700px) {
+    .centralHeader a img{
+        width:15em
+    }
+    .linksHeader a {
+  display: none;
+    }
+
+}

@@ -8,7 +8,7 @@ body {
 *{
   margin: 0;
   padding: 0;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Lato", sans-serif;
 }
 .width85 {
   width: 85%;
@@ -25,4 +25,7 @@ body {
   --laranja: #FE7B1D;
   --cinzamedio:#dcd8d8;
   --cinzaescuro:#535556;
+}
+.arredondamento{
+  border-radius: 0.25rem;
 }

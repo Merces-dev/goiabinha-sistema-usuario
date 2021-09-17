@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ToastProvider } from 'react-toast-notifications';
 
 import reportWebVitals from './reportWebVitals';
 //Pages
@@ -19,9 +18,9 @@ const routing = (
 );
 
 ReactDOM.render(
-  <ToastProvider>
-    {routing}
-  </ToastProvider>, 
+  
+    routing
+ , 
   document.getElementById('root')
 );
 

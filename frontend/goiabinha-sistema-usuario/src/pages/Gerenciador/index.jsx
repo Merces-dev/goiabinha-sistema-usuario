@@ -1,15 +1,9 @@
-
 import React, { useEffect, useState } from 'react'
 
-
-import {useToasts} from 'react-toast-notifications'
 
 //* Importando Componentes
 import Header from './../../components/header'
 import Footer from './../../components/footer'
-
-//* Importando botões com Ícones
-import {FaTrashAlt, FaPencilAlt} from 'react-icons/fa'
 
 //* Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
 import { url } from '../../utils/constants'
@@ -24,7 +18,6 @@ const Gerenciador = () => {
     const [dataNascimento, setDataNascimento] = useState('');
     const [sexo, setSexo] = useState('');
     const [usuarios, setUsuarios] = useState([]);
-    const {addToast} = useToasts();
 
     useEffect(() =>{
         listarUsuarios();
@@ -48,30 +41,50 @@ const Gerenciador = () => {
 
         // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
         // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
-        fetch(urlRequest, {
-            method: method,
-            headers :{
-                'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify(usuario)
-        })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response)
-            if(method === 'POST'){
-                addToast((<em>Usuário adicionado</em>), {appearance:'success', autoDismiss : true});
+        if(method === 'PUT'){
+            if (window.confirm('Deseja mesmo atualizar os dados deste usuário ?')) { 
+                fetch(urlRequest, {
+                    method: method,
+                    headers :{
+                        'Content-Type' : 'application/json'
+                    },
+                    body: JSON.stringify(usuario)
+                })
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    alert('Dados do usuário atualizados');
+                    listarUsuarios();
+                    stateContainer();
+                })
+                .catch(err => {
+                    console.error(err)
+                    alert(err);
+                });
 
-            }else if(method === 'PUT'){
-                addToast((<em>Dados do usuário atualizados</em>), {appearance:'success', autoDismiss : true});
+            }else{
 
             }
-            listarUsuarios();
-            stateContainer();
-        })
-        .catch(err => {
-            console.error(err)
-            addToast(err, {appearance:'error', autoDismiss : true});
-        });
+        }else if(method === 'POST'){
+            fetch(urlRequest, {
+                method: method,
+                headers :{
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify(usuario)
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response)
+                alert('Usuário adicionado');
+                listarUsuarios();
+                stateContainer();
+            })
+            .catch(err => {
+                console.error(err)
+                alert(err);
+            });
+        }
 
     }
 
@@ -80,6 +93,7 @@ const Gerenciador = () => {
     //* Método que atualiza as informações de um usuario de acordo com seu Id
     const atualizarUsuario = (event) =>{
         event.preventDefault()
+
         if(event.target.value !== undefined){
 
         const idUsuario = event.target.value;
@@ -87,29 +101,32 @@ const Gerenciador = () => {
         // Lista o usuário de acordo com seu id e dá valor as variáveis do objeto usuario
         listarUsuario(idUsuario);
         stateContainer();
+
     }else{
-        addToast((<em>Usuario não encontrado, tente novamente!</em>), {appearance:'info', autoDismiss : true});
+        alert('Usuario não encontrado, tente novamente!');
     }
     }
 
     //* Método que exclui um usuario e suas informações de acordo com seu Id
     const excluirUsuario = (event) =>{
-        if(event.target.value !== undefined){
-
             // Busca a exclusão do usuário de acordo com o valor definido no input
-            fetch(`${url}/Usuarios/${event.target.value}`, {
-                method: 'DELETE',
-                //TODO:
-                // Adicionar authorization com bearer token
-            })
-            .then(response => response.json())
-            .then(dados => {    
-                addToast((<em>Usuario removido!</em>), {appearance:'success', autoDismiss : true});
-                listarUsuarios();
-            })
-            .catch(err => console.error(err));
+            if(event.target.value !== undefined){
+                if (window.confirm('Deseja mesmo apagar este usuário ?')) { 
+
+                    fetch(`${url}/Usuarios/${event.target.value}`, {
+                        method: 'DELETE',
+                        //TODO:
+                        // Adicionar authorization com bearer token
+                    })
+                    .then(response => response.json())
+                    .then(dados => {    
+                        listarUsuarios();
+                    })
+                    .catch(err => console.error(err));
+
+                }
         }else{
-            addToast((<em>Usuario não encontrado, tente novamente!</em>), {appearance:'info', autoDismiss : true});
+            alert('Usuario não encontrado, tente novamente!');
         }
   
     }
@@ -170,7 +187,7 @@ const Gerenciador = () => {
                     <hr/>
                     <div className='crudBox'>
                         <div>
-                            <button onClick={stateContainer} className='buttonCrud'>Adicionar Usuário</button>
+                            <button onClick={stateContainer} className='buttonCrud arredondamento'>Adicionar Usuário</button>
 
                         </div>
                         <div>
@@ -191,15 +208,15 @@ const Gerenciador = () => {
                                     usuarios.map((item, index) => {
                                             return(
                                             <tr className='linhaTabela' key={index}>
-                                                <th className='elementoTabela'>{item.id}</th>
-                                                <th>{item.nome}</th>
-                                                <th>{item.dataNascimento}</th>
+                                                <th className='elementoTabela'><p className='mobileTipo'>Id: </p>{item.id}</th>
+                                                <th className='elementoTabela'><p className='mobileTipo'>Nome: </p>{item.nome}</th>
+                                                <th className='elementoTabela'><p className='mobileTipo'>Data de Nascimento: </p>{item.dataNascimento}</th>
 
-                                                <th>{item.sexo}</th>
+                                                <th className='elementoTabela'><p className='mobileTipo'>Sexo: </p>{item.sexo}</th>
                                                 <th className='colunaBotoes'>
-                                                    <button style={{backgroundColor:'#0abab5'}} value={item.id} onClick={event => atualizarUsuario(event)} ><FaPencilAlt className='iconBotoes'/></button>
-                                                    <button style={{backgroundColor:'#ff3333'}} value={item.id} onClick={event => excluirUsuario(event)}><FaTrashAlt className='iconBotoes'/></button>
-                                               
+                                                    <button className='arredondamento' style={{backgroundColor:'#535556'}} value={item.id} onClick={event => atualizarUsuario(event)} ><span style={{color:'white'}}className='icon fa fa-pencil'></span></button>
+                                                    <button className='arredondamento' style={{backgroundColor:'#ff3333'}} value={item.id} onClick={event => excluirUsuario(event)}><span style={{color:'white'}}className='icon fa fa-trash'></span></button>
+
                                                 </th>
 
                                             </tr>
@@ -211,25 +228,33 @@ const Gerenciador = () => {
                             </table>
                         </div>
                     </div>
-                    <div id="idContainerInfo">
-                        <div className='stateContainer'>
-                            <button onClick={stateContainer}>X</button>
+                    <div id="idContainerInfo" className='arredondamento '>
+                        <div className='stateContainer '>
+                            <button className='arredondamento' onClick={stateContainer}>X</button>
                         </div>
-                    <form className='containerInputs' onSubmit={adicionarUsuario}>
-                            <label>
-                                <input maxLength='50' value={nome} onChange={event => setNome(event.target.value)}  type="text" placeholder='Nome' required />
-                            </label>
-
-                            <label>
-                            <input   value={sexo} onChange={event => setSexo(event.target.value)}  type="text" placeholder='Sexo'  />
-                            </label>
-                                        
-                            <label>
-                            <input   value={dataNascimento} onChange={event => setDataNascimento(event.target.value)}  type="date" placeholder='Sexo'  />
-                            </label>
-                            <input className='buttonCrud' type='submit' value='Salvar'></input>
+                        <form className='containerInputs '  onSubmit={adicionarUsuario}>
+                            <input maxLength='50' className='arredondamento'value={nome} onChange={event => setNome(event.target.value)}  type="text" placeholder='Nome' required />
+                      
+                            <input className='arredondamento'  value={dataNascimento} onChange={event => setDataNascimento(event.target.value)}  type="date" required />
+                            <select className='arredondamento' value={sexo} onChange={event => setSexo(event.target.value)} name="sexo" required>
+                                <option value="" disabled selected>Selecione seu sexo</option>   
+                                <option value='Masculino'>Masculino</option>
+                                <option value='Feminino'>Feminino</option>
+                                <option value='Outros'>Outros</option>
+      
+                            </select>    
+                            <input className='buttonCrud arredondamento ' style={{color:'white', backgroundColor: 'var(--laranja)'}} type='submit' value='Salvar'></input>
 
                         </form>
+                    </div>
+                    <div id="alerta"className='arredondamento '>
+                        <div className='subDivAlerta arredondamento'>
+                             <p>Informação Intelitrader</p>
+                             <button className='arredondamento' /*onClick={stateAlerta}*/>X</button> 
+                        </div>
+                        <div className='infoAlerta'>
+                            <p>O usuario foi cadastrado com sucesso</p>
+                        </div>
                     </div>
                 </div>
             </div>
