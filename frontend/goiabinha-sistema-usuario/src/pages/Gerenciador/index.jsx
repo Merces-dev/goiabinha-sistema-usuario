@@ -13,7 +13,7 @@ import { url } from "../../utils/constants";
 //* Importando CSS
 import "./index.css";
 
-const Gerenciador = () => {
+const Gerenciador = (async) => {
   // Declarando Variáveis
   const [idUsuario, setIdUsuario] = useState("");
   const [nome, setNome] = useState("");
@@ -21,7 +21,8 @@ const Gerenciador = () => {
   const [sexo, setSexo] = useState("");
   const [usuarios, setUsuarios] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isModalConfirmacaoVisible, setIsModalConfirmacaoVisible] = useState(false);
+  const [isModalConfirmacaoVisible, setIsModalConfirmacaoVisible] =
+    useState(false);
   const [isFunctionAuthorized, setIsFunctionAuthorized] = useState(false);
 
   const [mensagem, setMensagem] = useState("");
@@ -50,20 +51,48 @@ const Gerenciador = () => {
 
     // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
     // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
-    stateContainer()
-    if(usuario.nome === '' || usuario.dataNascimento === '' || usuario.sexo ===''){
+    stateContainer();
+    if (
+      usuario.nome === "" ||
+      usuario.dataNascimento === "" ||
+      usuario.sexo === ""
+    ) {
       setMensagem("Todos os campos devem ter valores");
       setIsModalVisible(true);
-    }else{
+    } else {
+      if (method === "PUT") {
+        setIsModalConfirmacaoVisible(true);
+        setPergunta("Deseja mesmo atualizar os dados deste usuário ?");
 
-    if (method === "PUT") {
-      setIsModalConfirmacaoVisible(true);
-      setPergunta('Deseja mesmo atualizar os dados deste usuário ?')
-      if (isFunctionAuthorized) {
-        setIsModalConfirmacaoVisible(false)
-        setIsFunctionAuthorized(false)
+        if (window.confirm("Deseja mesmo atualizar os dados deste usuário ?")) {
 
-        console.log('liberado')
+
+          console.log("liberado");
+          fetch(urlRequest, {
+            method: method,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(usuario),
+          })
+            .then((response) => response.json())
+            .then((response) => {
+              setMensagem("Usuário atualizado com sucesso");
+              setIsModalVisible(true);
+              setPergunta("");
+              listarUsuarios();
+              zerarVariavies();
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        } else {
+          console.log("Não liberado");
+        }
+      } else if (method === "POST") {
+        stateContainer();
+        if (window.confirm("Deseja mesmo adicionar este usuário ?")) {
+
         fetch(urlRequest, {
           method: method,
           headers: {
@@ -74,40 +103,16 @@ const Gerenciador = () => {
           .then((response) => response.json())
           .then((response) => {
             console.log(response);
-            setMensagem("Usuário atualizado com sucesso");
+            setMensagem("Usuário adicionado com sucesso");
             setIsModalVisible(true);
-            setPergunta('')
             listarUsuarios();
-            zerarVariavies()
+            stateContainer();
           })
           .catch((err) => {
             console.error(err);
           });
-      } else {
-      }
-    } else if (method === "POST") {
-      stateContainer();
-
-      fetch(urlRequest, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(usuario),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response);
-          setMensagem("Usuário adicionado com sucesso");
-          setIsModalVisible(true);
-          listarUsuarios();
-          stateContainer();
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }    }
-
+        }}
+    }
   };
 
   //* Método que atualiza as informações de um usuario de acordo com seu Id
@@ -163,7 +168,6 @@ const Gerenciador = () => {
       .then((dados) => {
         setIdUsuario(dados.id);
         setNome(dados.nome);
-        console.log(dados.dataNascimento);
         setDataNascimento(dados.dataNascimento);
         setSexo(dados.sexo);
       })
@@ -176,7 +180,6 @@ const Gerenciador = () => {
       .then((response) => response.json())
       .then((dados) => {
         setUsuarios(dados);
-        console.log(usuarios);
       })
       .catch((err) => console.error(err));
   };
@@ -365,9 +368,16 @@ const Gerenciador = () => {
         {isModalVisible ? (
           <Modal onClose={() => setIsModalVisible(false)} children={mensagem} />
         ) : null}
-        {isModalConfirmacaoVisible ? (
-          <ModalConfirmacao onClose={() => setIsModalConfirmacaoVisible(false)}  onOk={() => setIsFunctionAuthorized(true)} children={pergunta} />
-        ) : null}
+        {/* {isModalConfirmacaoVisible ? (
+          <ModalConfirmacao
+            onClose={() => setIsModalConfirmacaoVisible(false)}
+            onOk={(event) => {
+              setIsModalConfirmacaoVisible(false);
+              setIsFunctionAuthorized(true);
+            }}
+            children={pergunta}
+          />
+        ) : null} */}
       </div>
       <Footer />
     </div>

@@ -12,6 +12,7 @@ import {
 import Header from "./../../components/header";
 import Footer from "./../../components/footer";
 import Modal from "./../../components/modal";
+import ModalConfirmacao from "../../components/modalconfirmacao";
 
 //* Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
 import { url } from "../../utils/constants";
@@ -24,9 +25,14 @@ const AdicionarUsuario = () => {
   const [dataNascimento, setDataNascimento] = useState("");
   const [sexo, setSexo] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalConfirmacaoVisible, setIsModalConfirmacaoVisible] =
+    useState(false);
+  const [pergunta, setPergunta] = useState("");
+
+  const [isFunctionAuthorized, setIsFunctionAuthorized] = useState(false);
   const [mensagem, setMensagem] = useState("");
   let history = useHistory();
-  
+
   const adicionarUsuario = (event) => {
     event.preventDefault();
 
@@ -37,28 +43,41 @@ const AdicionarUsuario = () => {
       sexo: sexo,
     };
     let urlRequest = url + "/Usuarios";
-      
-    // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
-    // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
-    if (window.confirm("Deseja mesmo adicionar este usuário ?")) {
-      fetch(urlRequest, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(usuario),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response);
-          setMensagem("Usuário adicionado com sucesso");
-          setIsModalVisible(true);
-          setTimeout(() => {
-            history.push("/gerenciamento")
-          }, 2050);        })
-        .catch((err) => {
-          console.error(err);
-        });
+    if (
+      usuario.nome === "" ||
+      usuario.dataNascimento === "" ||
+      usuario.sexo === ""
+    ) {
+      setMensagem("Todos os campos devem ter valores");
+      setIsModalVisible(true);
+    } else {
+      // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
+      // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
+      setIsModalConfirmacaoVisible(true);
+      setPergunta("Deseja mesmo adicionar este usuário ?");
+      if (window.confirm("Deseja mesmo adicionar este usuário ?")) {
+        setIsModalConfirmacaoVisible(false);
+        setIsFunctionAuthorized(false);
+        fetch(urlRequest, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(usuario),
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            console.log(response);
+            setMensagem("Usuário adicionado com sucesso");
+            setIsModalVisible(true);
+            setTimeout(() => {
+              history.push("/gerenciamento");
+            }, 2050);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
     }
   };
   return (
@@ -76,61 +95,64 @@ const AdicionarUsuario = () => {
                 <h3>Informações do Usuário</h3>
               </div>
               <div>
-                <div className="infoUsuario centralizar ">
-                  
-                  <div className="boxInfoLabel coluna arredondamento">
-                    <label className="arredondamento">Nome do Usuário</label>
-                    <input
-                      maxLength="50"
-                      className="arredondamento inputEditar"
-                      value={nome}
-                      onChange={(event) => setNome(event.target.value)}
-                      type="text"
-                      placeholder="Nome"
-                      required
-                    />
+                <form action="">
+                  <div className="infoUsuario centralizar ">
+                    <div className="boxInfoLabel coluna arredondamento">
+                      <label className="arredondamento">Nome do Usuário</label>
+                      <input
+                        maxLength="50"
+                        className="arredondamento inputEditar"
+                        value={nome}
+                        onChange={(event) => setNome(event.target.value)}
+                        type="text"
+                        placeholder="Nome"
+                        required
+                      />
+                    </div>
+                    <div className="boxInfoLabel coluna arredondamento">
+                      <label className="arredondamento">
+                        Data de Nascimento
+                      </label>
+                      <input
+                        className="arredondamento inputEditar"
+                        value={dataNascimento}
+                        onChange={(event) =>
+                          setDataNascimento(event.target.value)
+                        }
+                        type="date"
+                        required
+                      />
+                    </div>
+                    <div className="boxInfoLabel coluna arredondamento">
+                      <label className="arredondamento">Sexo do Usuário</label>
+                      <select
+                        className="arredondamento inputEditar"
+                        value={sexo}
+                        onChange={(event) => setSexo(event.target.value)}
+                        name="sexo"
+                        required
+                      >
+                        <option value="" disabled selected>
+                          Selecione seu sexo
+                        </option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Outros">Outros</option>
+                      </select>{" "}
+                    </div>
                   </div>
-                  <div className="boxInfoLabel coluna arredondamento">
-                    <label className="arredondamento">Data de Nascimento</label>
-                    <input
-                      className="arredondamento inputEditar"
-                      value={dataNascimento}
-                      onChange={(event) =>
-                        setDataNascimento(event.target.value)
-                      }
-                      type="date"
-                      required
-                    />
-                  </div>
-                  <div className="boxInfoLabel coluna arredondamento">
-                    <label className="arredondamento">Sexo do Usuário</label>
-                    <select
-                      className="arredondamento inputEditar"
-                      value={sexo}
-                      onChange={(event) => setSexo(event.target.value)}
-                      name="sexo"
-                      required
+                  <div className="centralizar">
+                    <button
+                      className="buttonP boxInfoLabel arredondamento caixadedica"
+                      style={{ backgroundColor: "#535556" }}
+                      onClick={(event) => {
+                        adicionarUsuario(event);
+                      }}
                     >
-                      <option value="" disabled selected>
-                        Selecione seu sexo
-                      </option>
-                      <option value="Masculino">Masculino</option>
-                      <option value="Feminino">Feminino</option>
-                      <option value="Outros">Outros</option>
-                    </select>{" "}
+                      Adicionar
+                    </button>
                   </div>
-                </div>
-                <div className="centralizar">
-                  <button
-                    className="buttonP boxInfoLabel arredondamento caixadedica"
-                    style={{ backgroundColor: "#535556" }}
-                    onClick={(event) => {
-                      adicionarUsuario(event);
-                    }}
-                  >
-                    Adicionar
-                  </button>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -140,6 +162,16 @@ const AdicionarUsuario = () => {
       {isModalVisible ? (
         <Modal onClose={() => setIsModalVisible(false)} children={mensagem} />
       ) : null}
+      {/* {isModalConfirmacaoVisible ? (
+        <ModalConfirmacao
+          onClose={() => setIsModalConfirmacaoVisible(false)}
+          onOk={() => {
+            setIsModalConfirmacaoVisible(false);
+            setIsFunctionAuthorized(true);
+          }}
+          children={pergunta}
+        />
+      ) : null} */}
       <Footer />
     </div>
   );

@@ -12,6 +12,7 @@ import {
 import Header from "./../../components/header";
 import Footer from "./../../components/footer";
 import Modal from "./../../components/modal";
+import ModalConfirmacao from "../../components/modalconfirmacao";
 
 //* Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
 import { url } from "../../utils/constants";
@@ -25,6 +26,11 @@ const EditarUsuario = () => {
   const [dataNascimento, setDataNascimento] = useState("");
   const [sexo, setSexo] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalConfirmacaoVisible, setIsModalConfirmacaoVisible] =
+    useState(false);
+  const [pergunta, setPergunta] = useState("");
+
+  const [isFunctionAuthorized, setIsFunctionAuthorized] = useState(false);
   const [mensagem, setMensagem] = useState("");
   let history = useHistory();
 
@@ -59,26 +65,39 @@ const EditarUsuario = () => {
       sexo: sexo,
     };
     let urlRequest = url + "/Usuarios/" + idUsuario;
+    if (
+      usuario.nome === "" ||
+      usuario.dataNascimento === "" ||
+      usuario.sexo === "" 
+    ) {
+      setMensagem("Todos os campos devem ter valores");
+      setIsModalVisible(true);
+    } else {
+      // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
+      // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
+      setIsModalConfirmacaoVisible(true);
+      setPergunta("Deseja mesmo atualizar os dados deste usuário ?");
 
-    // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
-    // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
-    if (window.confirm("Deseja mesmo atualizar os dados deste usuário ?")) {
-      fetch(urlRequest, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(usuario),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response);
-          setMensagem("Usuário atualizado com sucesso");
-          setIsModalVisible(true);
+      if (window.confirm("Deseja mesmo editar os dados deste usuário ?")) {
+        setIsModalConfirmacaoVisible(false);
+        setIsFunctionAuthorized(false);
+        fetch(urlRequest, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(usuario),
         })
-        .catch((err) => {
-          console.error(err);
-        });
+          .then((response) => response.json())
+          .then((response) => {
+            console.log(response);
+            setMensagem("Usuário atualizado com sucesso");
+            setIsModalVisible(true);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
     }
   };
   console.log(idUsuario);
@@ -165,6 +184,16 @@ const EditarUsuario = () => {
       {isModalVisible ? (
         <Modal onClose={() => setIsModalVisible(false)} children={mensagem} />
       ) : null}
+      {/* {isModalConfirmacaoVisible ? (
+        <ModalConfirmacao
+          onClose={() => setIsModalConfirmacaoVisible(false)}
+          onOk={() => {
+            setIsModalConfirmacaoVisible(false);
+            setIsFunctionAuthorized(true);
+          }}
+          children={pergunta}
+        />
+      ) : null} */}
       <Footer />
     </div>
   );

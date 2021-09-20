@@ -11,7 +11,10 @@ const Home = () => {
                 <div className='width85'>
                     <div className='centralHome'>
                         <div className='arredondamento centralizar'>
-                            <a style={{textAlign:'center'}}href='/gerenciamento'>Gerenciamento de Usuários</a>
+                            <a style={{textAlign:'center'}}href='/gerenciamento'>Gerenciamento de usuários</a>
+                        </div>
+                        <div className='arredondamento centralizar'>
+                            <a style={{textAlign:'center'}}href='/adicionar-usuario'>Adicionar novo usuário</a>
                         </div>
                     </div>
                 </div>

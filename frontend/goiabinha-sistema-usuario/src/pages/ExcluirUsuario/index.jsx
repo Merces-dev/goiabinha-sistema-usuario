@@ -5,13 +5,14 @@ import {
   Route,
   Link,
   useParams,
-  useHistory
+  useHistory,
 } from "react-router-dom";
 
 //* Importando Componentes
 import Header from "./../../components/header";
 import Footer from "./../../components/footer";
 import Modal from "./../../components/modal";
+import ModalConfirmacao from "../../components/modalconfirmacao";
 
 //* Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
 import { url } from "../../utils/constants";
@@ -25,20 +26,25 @@ const ExcluirUsuario = () => {
   const [dataNascimento, setDataNascimento] = useState("");
   const [sexo, setSexo] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalConfirmacaoVisible, setIsModalConfirmacaoVisible] =
+    useState(false);
+  const [isFunctionAuthorized, setIsFunctionAuthorized] = useState(false);
+
   const [mensagem, setMensagem] = useState("");
+  const [pergunta, setPergunta] = useState("");
   let history = useHistory();
 
   useEffect(() => {
     listarUsuario();
   }, []);
-  
+
   //Caso o id seja indefinido, levara o usuário a página de erro
-  if(idUsuario == undefined){
-    history.push('/nao-encontrada')
+  if (idUsuario == undefined) {
+    history.push("/nao-encontrada");
   }
   function listarUsuario() {
     let id = idUsuario;
-      fetch(`${url}/Usuarios/${id}`)
+    fetch(`${url}/Usuarios/${id}`)
       .then((response) => response.json())
       .then((dados) => {
         console.log(dados);
@@ -48,15 +54,15 @@ const ExcluirUsuario = () => {
         setSexo(dados.sexo);
       })
       .catch((error) => console.error(error));
-
-
-
   }
   //* Método que exclui um usuario e suas informações de acordo com seu Id
   const excluirUsuario = (event, id) => {
     event.preventDefault();
     // Busca a exclusão do usuário de acordo com o valor definido no input
     if (id !== "") {
+      setIsModalConfirmacaoVisible(true);
+      setPergunta("Deseja mesmo excluir este usuário ?");
+
       if (window.confirm("Deseja mesmo excluir este usuário ?")) {
         fetch(`${url}/Usuarios/${id}`, {
           method: "DELETE",
@@ -71,9 +77,8 @@ const ExcluirUsuario = () => {
             //Estado do modal
             setIsModalVisible(true);
             setTimeout(() => {
-            history.push("/gerenciamento")
-          }, 2050);
-
+              history.push("/gerenciamento");
+            }, 2050);
           })
           .catch((err) => console.error(err));
       }
@@ -89,7 +94,7 @@ const ExcluirUsuario = () => {
       <Header />
       <div className="total coluna">
         <div className="subHeader width85">
-          <h1>Excluir dados do Usuário</h1>
+          <h1>Excluir Usuário</h1>
           <hr style={{ marginBottom: "20px" }} />
         </div>
         <div className="total coluna backgroundConteudo">
@@ -117,7 +122,7 @@ const ExcluirUsuario = () => {
                     <p>{sexo}</p>
                   </div>
                 </div>
-                <div className='centralizar'>
+                <div className="centralizar">
                   <button
                     className="buttonP boxInfoLabel arredondamento caixadedica"
                     style={{ backgroundColor: "#ff3333" }}
@@ -138,6 +143,17 @@ const ExcluirUsuario = () => {
       {isModalVisible ? (
         <Modal onClose={() => setIsModalVisible(false)} children={mensagem} />
       ) : null}
+      {/* {isModalConfirmacaoVisible ? (
+        <ModalConfirmacao
+          onClose={() => setIsModalConfirmacaoVisible(false)}
+          onOk={(event) => {
+            setIsModalConfirmacaoVisible(false);
+            setIsFunctionAuthorized(true);
+            excluirUsuario(event)
+          }}
+          children={pergunta}
+        />
+      ) : null} */}
       <Footer />
     </div>
   );
