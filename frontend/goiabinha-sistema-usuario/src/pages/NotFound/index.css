@@ -1,0 +1,45 @@
+.containerConteudoNotFound {
+    height: 500px;
+    margin: 40px 0;
+    background-color: white;
+    width: calc(200px + 30vw);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.info404 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 80px;
+}
+
+.info404 h3 {
+    text-align: center;
+
+}
+
+.info404 h4 {
+    font-weight: 200;
+}
+
+.info404 img {
+    width: 150px;
+    margin: 20px;
+}
+
+.info404 a {
+    color: var(--laranja);
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+@media (max-width: 510px) {
+
+
+}

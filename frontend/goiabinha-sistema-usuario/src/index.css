@@ -21,6 +21,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+.centralizar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 :root{
   --laranja: #FE7B1D;
   --cinzamedio:#dcd8d8;

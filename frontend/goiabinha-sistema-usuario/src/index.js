@@ -10,6 +10,7 @@ import Gerenciador from './pages/Gerenciador';
 import AdicionarUsuario from './pages/AdicionarUsuario';
 import ExcluirUsuario from './pages/ExcluirUsuario';
 import EditarUsuario from './pages/EditarUsuario';
+import NotFound from './pages/NotFound';
 
 
 const routing = (
@@ -20,6 +21,7 @@ const routing = (
       <Route  path="/adicionar-usuario" component={AdicionarUsuario}/>
       <Route  path="/excluir-usuario/:id" component={ExcluirUsuario}/>
       <Route  path="/editar-usuario/:id" component={EditarUsuario}/>
+      <Route component={NotFound} />
 
     </Switch>
   </Router>

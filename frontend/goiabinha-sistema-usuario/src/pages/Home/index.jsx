@@ -10,8 +10,8 @@ const Home = () => {
             <div className='total'>
                 <div className='width85'>
                     <div className='centralHome'>
-                        <div>
-                            <a href='/gerenciamento'>Gerenciamento de Usuários</a>
+                        <div className='arredondamento centralizar'>
+                            <a style={{textAlign:'center'}}href='/gerenciamento'>Gerenciamento de Usuários</a>
                         </div>
                     </div>
                 </div>

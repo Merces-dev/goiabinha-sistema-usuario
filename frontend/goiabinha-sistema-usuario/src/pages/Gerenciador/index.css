@@ -57,13 +57,25 @@ tbody tr th {
     background-color: red
 }
 
-.colunaBotoes button {
+.botaoUsuarios {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     padding: 10px;
     margin: 3px;
-    width: 38px;
     border-width: 0;
     cursor: pointer;
+    color: white;
+    font-weight: 600;
+    user-select: none;
+
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+
 }
+
 
 .iconBotoes {
     color: white;
@@ -95,7 +107,7 @@ tbody tr th {
     justify-content: flex-start;
     height: 60%;
     width: 100%;
-    margin-top:20px;
+    margin-top: 20px;
     flex-direction: column;
 }
 
@@ -124,23 +136,35 @@ tbody tr th {
     cursor: pointer
 }
 
-.stateContainer h3{
-    position:absolute;
-    font-weight:200;
-    font-size:19px;
-    top:25%;
-    left:25%;
-    color:var(--cinzaescuro)
-
+.stateContainer h3 {
+    position: absolute;
+    font-weight: 200;
+    font-size: 19px;
+    top: 25%;
+    left: 25%;
+    color: var(--cinzaescuro)
 }
+
 .stateContainer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    position:relative
-
+    position: relative
 }
 
+@media (max-width: 1200px) {
+    .caixadedicatexto {
+        right: 30px;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .caixadedicatexto {
+        display: none;
+    }
+
+}
 
 @media (max-width: 490px) {
 
@@ -203,7 +227,7 @@ tbody tr th {
 
     .containerInputs {
 
-        margin-top:0;
+        margin-top: 0;
 
     }
 
@@ -213,19 +237,112 @@ tbody tr th {
         background: white;
         padding: 18px 10px;
     }
-    .stateContainer h3{
-        position:absolute;
-        font-weight:200;
-        font-size:16px;
-        top:25%;
-        left:18%;
-        color:var(--cinzaescuro)
-    
+
+    .stateContainer h3 {
+        position: absolute;
+        font-weight: 200;
+        font-size: 16px;
+        top: 25%;
+        left: 18%;
+        color: var(--cinzaescuro)
     }
-    
-.stateContainer button {
-    padding: 15px;
+
+    .stateContainer button {
+        padding: 15px;
+    }
+
+
 }
+
+
+@media (max-width: 510px) {
+
+    .elementoTabela {
+        display: flex;
+        flex-direction: row;
+        font-weight: 100;
+    }
+
+    .elementoTabela p {
+        margin-right: 5px;
+        font-weight: 600;
+
+    }
+
+    thead,
+    thead tr,
+    thead tr td {
+        padding: 5px;
+        display: none;
+    }
+
+    tbody,
+    tbody tr,
+    tbody tr th {
+        padding: 5px;
+        border: 0
+    }
+
+    tbody tr {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid var(--cinzaescuro);
+    }
+
+    th,
+    td {
+        font-size: 0.8rem;
+
+    }
+
+    .mobileTipo {
+        display: flex;
+    }
+
+    .tabelaGerenciamento {
+        width: 100%;
+        padding: 0;
+        margin: 10px 0;
+        border-collapse: collapse;
+
+    }
+
+    #idContainerInfo {
+        width: 230px;
+        padding: 10px;
+        height: 350px;
+
+    }
+
+    .containerInputs {
+
+        margin-top: 0;
+
+    }
+
+    .containerInputs input,
+    .containerInputs select {
+        max-width: 180px;
+        background: white;
+        padding: 18px 10px;
+    }
+
+    .stateContainer h3 {
+        position: absolute;
+        font-weight: 200;
+        font-size: 16px;
+        top: 25%;
+        left: 18%;
+        color: var(--cinzaescuro)
+    }
+
+    .stateContainer button {
+        padding: 15px;
+    }
+
+    .caixadedicatexto {
+        display: none;
+    }
 
 }
 
@@ -233,22 +350,21 @@ tbody tr th {
 .caixadedica {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted var(--cinzaescuro);
-  }
-  
-  .caixadedica .caixadedicatexto {
+}
+
+.caixadedica .caixadedicatexto {
     visibility: hidden;
-    width: 180px;
+    width: 150px;
     background-color: var(--cinzaescuro);
     color: #fff;
     text-align: center;
     padding: 8px 2px;
-  
-    /* Position the tooltip */
+    margin-left: 15px;
     position: absolute;
     z-index: 1;
-  }
-  
-  .caixadedica:hover .caixadedicatexto {
+    font-size: 10px;
+}
+
+.caixadedica:hover .caixadedicatexto {
     visibility: visible;
-  }
+}

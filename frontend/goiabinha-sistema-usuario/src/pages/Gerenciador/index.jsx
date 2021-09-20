@@ -5,6 +5,8 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 import Header from "./../../components/header";
 import Footer from "./../../components/footer";
 import Modal from "./../../components/modal";
+import ModalConfirmacao from "../../components/modalconfirmacao";
+
 //* Importando a Url que será utilizada para realizar o fetch (Ligação com a API)
 import { url } from "../../utils/constants";
 
@@ -19,7 +21,11 @@ const Gerenciador = () => {
   const [sexo, setSexo] = useState("");
   const [usuarios, setUsuarios] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalConfirmacaoVisible, setIsModalConfirmacaoVisible] = useState(false);
+  const [isFunctionAuthorized, setIsFunctionAuthorized] = useState(false);
+
   const [mensagem, setMensagem] = useState("");
+  const [pergunta, setPergunta] = useState("");
   let history = useHistory();
 
   useEffect(() => {
@@ -44,8 +50,20 @@ const Gerenciador = () => {
 
     // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
     // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
+    stateContainer()
+    if(usuario.nome === '' || usuario.dataNascimento === '' || usuario.sexo ===''){
+      setMensagem("Todos os campos devem ter valores");
+      setIsModalVisible(true);
+    }else{
+
     if (method === "PUT") {
-      if (window.confirm("Deseja mesmo atualizar os dados deste usuário ?")) {
+      setIsModalConfirmacaoVisible(true);
+      setPergunta('Deseja mesmo atualizar os dados deste usuário ?')
+      if (isFunctionAuthorized) {
+        setIsModalConfirmacaoVisible(false)
+        setIsFunctionAuthorized(false)
+
+        console.log('liberado')
         fetch(urlRequest, {
           method: method,
           headers: {
@@ -58,8 +76,9 @@ const Gerenciador = () => {
             console.log(response);
             setMensagem("Usuário atualizado com sucesso");
             setIsModalVisible(true);
+            setPergunta('')
             listarUsuarios();
-            stateContainer();
+            zerarVariavies()
           })
           .catch((err) => {
             console.error(err);
@@ -67,6 +86,8 @@ const Gerenciador = () => {
       } else {
       }
     } else if (method === "POST") {
+      stateContainer();
+
       fetch(urlRequest, {
         method: method,
         headers: {
@@ -77,7 +98,6 @@ const Gerenciador = () => {
         .then((response) => response.json())
         .then((response) => {
           console.log(response);
-          setMensagem("");
           setMensagem("Usuário adicionado com sucesso");
           setIsModalVisible(true);
           listarUsuarios();
@@ -86,15 +106,16 @@ const Gerenciador = () => {
         .catch((err) => {
           console.error(err);
         });
-    }
+    }    }
+
   };
 
   //* Método que atualiza as informações de um usuario de acordo com seu Id
-  const atualizarUsuario = (event) => {
+  const atualizarUsuario = (event, id) => {
     event.preventDefault();
 
-    if (event.target.value !== undefined) {
-      const idUsuario = event.target.value;
+    if (id !== "") {
+      const idUsuario = id;
 
       // Lista o usuário de acordo com seu id e dá valor as variáveis do objeto usuario
       listarUsuario(idUsuario);
@@ -107,11 +128,11 @@ const Gerenciador = () => {
   };
 
   //* Método que exclui um usuario e suas informações de acordo com seu Id
-  const excluirUsuario = (event) => {
+  const excluirUsuario = (event, id) => {
     // Busca a exclusão do usuário de acordo com o valor definido no input
-    if (event.target.value !== undefined) {
+    if (id !== "") {
       if (window.confirm("Deseja mesmo excluir este usuário ?")) {
-        fetch(`${url}/Usuarios/${event.target.value}`, {
+        fetch(`${url}/Usuarios/${id}`, {
           method: "DELETE",
           //TODO:
           // Adicionar authorization com bearer token
@@ -142,6 +163,7 @@ const Gerenciador = () => {
       .then((dados) => {
         setIdUsuario(dados.id);
         setNome(dados.nome);
+        console.log(dados.dataNascimento);
         setDataNascimento(dados.dataNascimento);
         setSexo(dados.sexo);
       })
@@ -187,14 +209,25 @@ const Gerenciador = () => {
           </div>
           <hr />
           <div className="crudBox">
-            <div>
-              <button
-                onClick={stateContainer}
-                className="buttonCrud arredondamento"
-              >
-                Adicionar Usuário
-              </button>
+            <div className="caixadedica ">
+              <input
+                className=" arredondamento caixadedica buttonCrud"
+                type="button"
+                onClick={(event) => {
+                  if (event.ctrlKey) {
+                    history.push(`/adicionar-usuario/`);
+                  } else {
+                    adicionarUsuario(event);
+                  }
+                }}
+                value="Adicionar Usuário"
+              ></input>
+              <span class="caixadedicatexto arredondamento">
+                Tecla CTRL + Botão Esquerdo para abrir a página de adição de
+                usuários
+              </span>
             </div>
+
             <div>
               <table className="tabelaGerenciamento">
                 <thead>
@@ -231,32 +264,44 @@ const Gerenciador = () => {
                             {item.sexo}
                           </th>
                           <th className="colunaBotoes">
-                          <button
-                              className="arredondamento caixadedica"
-                              style={{ backgroundColor: "var(--cinzaescuro)" }}
-                              value={item.id}
-                              onClick={(event) => {
-                                if (event.ctrlKey) {
-                                  history.push(`/editar-usuario/${item.id}`)
-                                } else {
-                                  excluirUsuario(event);
-                                }
-                              }}
-                            >  <span class="caixadedicatexto arredondamento">Clique com CTRL + Botão Esquerdo para abrir a página de edição</span>
-                            </button>
-                            <button
-                              className="arredondamento caixadedica"
-                              style={{ backgroundColor: "#ff3333" }}
-                              value={item.id}
-                              onClick={(event) => {
-                                if (event.ctrlKey) {
-                                  history.push(`/excluir-usuario/${item.id}`)
-                                } else {
-                                  excluirUsuario(event);
-                                }
-                              }}
-                            >  <span class="caixadedicatexto arredondamento">Clique com CTRL + Botão Esquerdo para abrir a página de exclusão</span>
-                            </button>
+                            <div className="caixadedica ">
+                              <input
+                                className=" arredondamento caixadedica botaoUsuarios"
+                                style={{ background: "#535556" }}
+                                type="button"
+                                onClick={(event) => {
+                                  if (event.ctrlKey) {
+                                    history.push(`/editar-usuario/${item.id}`);
+                                  } else {
+                                    atualizarUsuario(event, item.id);
+                                  }
+                                }}
+                                value="Editar"
+                              ></input>
+                              <span class="caixadedicatexto arredondamento">
+                                Tecla CTRL + Botão Esquerdo para abrir a página
+                                de edição
+                              </span>
+                            </div>
+                            <div className="caixadedica ">
+                              <input
+                                className=" arredondamento caixadedica botaoUsuarios"
+                                style={{ background: "red" }}
+                                type="button"
+                                onClick={(event) => {
+                                  if (event.ctrlKey) {
+                                    history.push(`/excluir-usuario/${item.id}`);
+                                  } else {
+                                    excluirUsuario(event, item.id);
+                                  }
+                                }}
+                                value="Excluir"
+                              ></input>
+                              <span class="caixadedicatexto arredondamento">
+                                Tecla CTRL + Botão Esquerdo para abrir a página
+                                de exclusão
+                              </span>
+                            </div>
                           </th>
                         </tr>
                       );
@@ -269,7 +314,7 @@ const Gerenciador = () => {
           <div id="idContainerInfo" className="arredondamento ">
             <div className="stateContainer ">
               <div className="self">
-                <h3>Adicionar Usuario</h3>
+                <h3>Gerenciar Usuario</h3>
               </div>
 
               <button className="arredondamento" onClick={stateContainer}>
@@ -319,6 +364,9 @@ const Gerenciador = () => {
         </div>
         {isModalVisible ? (
           <Modal onClose={() => setIsModalVisible(false)} children={mensagem} />
+        ) : null}
+        {isModalConfirmacaoVisible ? (
+          <ModalConfirmacao onClose={() => setIsModalConfirmacaoVisible(false)}  onOk={() => setIsFunctionAuthorized(true)} children={pergunta} />
         ) : null}
       </div>
       <Footer />

@@ -44,3 +44,13 @@
     text-align: start;
     padding: 20px 15px
 }
+
+
+@media (max-width: 490px) {
+
+    #alerta {
+        width: 200px;
+
+    }
+
+}

@@ -1,5 +1,5 @@
 .header {
-    height: 100px;
+    height: auto;
     background-color: var(--cinzaescuro);
 }
 
@@ -16,17 +16,82 @@
     text-decoration: none;
     text-transform: uppercase;
     font-weight: 600;
+    padding-left: 20px;
+    font-size: 13px;
 }
 
 .linksHeader a:hover {
     opacity: 70%
 }
+
+.buttonMobileHamburguer {
+    display: none
+}
+
+.centralHeader a img {
+    width: 14em;
+    padding: 20px 0;
+
+}
+
 @media (max-width: 700px) {
-    .centralHeader a img{
-        width:15em
+    .mobileHeader {
+        display: block;
     }
+
+    .buttonMobileHamburguer {
+        display: block;
+        background-color: var(--cinzaescuro);
+        border: 0;
+        cursor: pointer;
+    }
+
+    .buttonMobileHamburguerLines {
+        width: 45px;
+        height: 4px;
+        background-color: white;
+        margin: 6px 0;
+    }
+
+    .centralHeader {
+        flex-direction: column;
+    }
+
+    .centralHeader a img {
+        width: 14em;
+        padding: 30px 0;
+    }
+
+    .linksHeader {
+        width: 100%;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 0;
+        border-top: 1px solid var(--cinzamedio);
+        padding-top: 10px;
+        display: none;
+
+    }
+
     .linksHeader a {
-  display: none;
+
+        padding: 10px 0;
+        font-size: 1em;
+    }
+
+    .logoButton {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    .centralHeader a img {
+        width: 12em
     }
 
 }

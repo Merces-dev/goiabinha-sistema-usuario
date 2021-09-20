@@ -1,0 +1,117 @@
+.coluna {
+    flex-direction: column;
+}
+
+.backgroundConteudo {
+    background-color: var(--cinzamedio);
+}
+
+.containerConteudo {
+    height: 500px;
+    margin: 40px 0;
+    background-color: white;
+    width: calc(200px + 30vw);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.headerContainer {
+    background-color: var(--cinzaescuro);
+    width: 100%;
+}
+
+.headerContainer h3 {
+    color: var(--cinzamedio);
+    font-weight: 600;
+    padding: 20px;
+}
+
+.infoUsuario {
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    margin-top: 30px;
+}
+
+.boxInfoLabel {
+    display: flex;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    ;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.boxInfoLabel p {
+    padding: 10px 0;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: 500;
+    color: var(--cinzaescuro);
+}
+
+
+.boxInfoLabel label {
+    text-align: center;
+    background-color: var(--laranja);
+    color: white;
+    padding: 6px 27px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+}
+
+.buttonP {
+    display: flex;
+    justify-content: center;
+    background-color: var(--laranja);
+    color: #fff;
+    font-weight: 700;
+    padding: 8px;
+    border: 0;
+    cursor: pointer;
+}
+
+
+.inputEditar{
+    padding: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    outline: none;
+    border: 0;
+
+}
+.naoDisponivel{
+    cursor:not-allowed
+}
+@media (max-width: 800px) {
+
+    .boxInfoLabel {
+        display: flex;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        ;
+        margin-bottom: 15px;
+        width: 80%;
+    }
+    
+    .boxInfoLabel p {
+        padding: 8px 0;
+        text-align: center;
+        text-transform: capitalize;
+        font-weight: 500;
+        color: var(--cinzaescuro);
+        font-size: 13px;
+    }
+    
+    
+    .boxInfoLabel label {
+        text-align: center;
+        background-color: var(--laranja);
+        color: white;
+        padding: 6px 27px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        font-size: 13px;
+    }
+
+}
