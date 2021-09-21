@@ -47,7 +47,7 @@ const Gerenciador = (async) => {
     // Caso o idUsuario seja igual a vazio, o método utilizado será um POST, caso contrário será um PUT
     let method = idUsuario === "" ? "POST" : "PUT";
     let urlRequest =
-      idUsuario === "" ? url + "/Usuarios" : url + "/Usuarios/" + idUsuario;
+      idUsuario === "" ? `${url}/Usuarios` :`${url}/Usuarios/${idUsuario}`;
 
     // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
     // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
