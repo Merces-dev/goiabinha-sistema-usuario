@@ -44,7 +44,7 @@ const ExcluirUsuario = () => {
   }
   function listarUsuario() {
     let id = idUsuario;
-    fetch(`${url}/Usuarios/${id}`)
+    fetch(`${url}/usuarios/${id}`)
       .then((response) => response.json())
       .then((dados) => {
         console.log(dados);
@@ -64,7 +64,7 @@ const ExcluirUsuario = () => {
       setPergunta("Deseja mesmo excluir este usuário ?");
 
       if (window.confirm("Deseja mesmo excluir este usuário ?")) {
-        fetch(`${url}/Usuarios/${id}`, {
+        fetch(`${url}/usuarios/${id}`, {
           method: "DELETE",
           //TODO:
           // Adicionar authorization com bearer token

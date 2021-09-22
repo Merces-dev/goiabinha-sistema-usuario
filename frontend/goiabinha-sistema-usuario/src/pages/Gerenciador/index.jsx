@@ -31,6 +31,7 @@ const Gerenciador = (async) => {
 
   useEffect(() => {
     listarUsuarios();
+    
   }, []);
 
   //* Método que adiciona um novo usuário
@@ -47,7 +48,7 @@ const Gerenciador = (async) => {
     // Caso o idUsuario seja igual a vazio, o método utilizado será um POST, caso contrário será um PUT
     let method = idUsuario === "" ? "POST" : "PUT";
     let urlRequest =
-      idUsuario === "" ? `${url}/Usuarios` :`${url}/Usuarios/${idUsuario}`;
+      idUsuario === "" ? `${url}/usuarios` :`${url}/usuarios/${idUsuario}`;
 
     // Realiza o Fetch, com o method definido acima, header do tipo JSON e body definido no objeto usuario porém
     // depois de passar pelo método JSON.stringify() - [Deixa o objeto em forma de código JSON]
@@ -65,7 +66,13 @@ const Gerenciador = (async) => {
         setPergunta("Deseja mesmo atualizar os dados deste usuário ?");
 
         if (window.confirm("Deseja mesmo atualizar os dados deste usuário ?")) {
-
+           usuario = {
+            id:idUsuario,
+            nome: nome,
+            dataNascimento: dataNascimento,
+            sexo: sexo,
+          };
+      
 
           console.log("liberado");
           fetch(urlRequest, {
@@ -137,7 +144,7 @@ const Gerenciador = (async) => {
     // Busca a exclusão do usuário de acordo com o valor definido no input
     if (id !== "") {
       if (window.confirm("Deseja mesmo excluir este usuário ?")) {
-        fetch(`${url}/Usuarios/${id}`, {
+        fetch(`${url}/usuarios/${id}`, {
           method: "DELETE",
           //TODO:
           // Adicionar authorization com bearer token
@@ -163,7 +170,7 @@ const Gerenciador = (async) => {
 
   //* Método que lista um usuario e suas informações de acordo com seu Id
   const listarUsuario = (id) => {
-    fetch(`${url}/Usuarios/${id}`)
+    fetch(`${url}/usuarios/${id}`)
       .then((response) => response.json())
       .then((dados) => {
         setIdUsuario(dados.id);
@@ -176,12 +183,13 @@ const Gerenciador = (async) => {
 
   //* Método que lista todos os usuários e suas informações
   const listarUsuarios = () => {
-    fetch(`${url}/Usuarios`)
-      .then((response) => response.json())
-      .then((dados) => {
-        setUsuarios(dados);
-      })
-      .catch((err) => console.error(err));
+    fetch(`${url}/usuarios/`)
+    .then(response => response.json())
+    .then((dados) => {
+      console.log(dados);
+      setUsuarios(dados)
+    })
+    .catch((error) => console.error(error));
   };
 
   //* Método utilizado para abrir o container de Adicionar Usuário ou Atualizar

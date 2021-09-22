@@ -42,7 +42,7 @@ const AdicionarUsuario = () => {
       dataNascimento: dataNascimento,
       sexo: sexo,
     };
-    let urlRequest = url + "/Usuarios";
+    let urlRequest = url + "/usuarios";
     if (
       usuario.nome === "" ||
       usuario.dataNascimento === "" ||
@@ -135,9 +135,9 @@ const AdicionarUsuario = () => {
                         <option value="" disabled selected>
                           Selecione seu sexo
                         </option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Feminino">Feminino</option>
-                        <option value="Outros">Outros</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                        <option value="O">Outros</option>
                       </select>{" "}
                     </div>
                   </div>

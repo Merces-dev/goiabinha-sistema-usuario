@@ -44,13 +44,15 @@ const EditarUsuario = () => {
   }
   function listarUsuario() {
     let id = idUsuario;
-    fetch(`${url}/Usuarios/${id}`)
-      .then((response) => response.json())
+    fetch(`${url}/usuarios/${id}`)
+      .then(response => response.json())
       .then((dados) => {
-        console.log(dados);
         setIdUsuario(dados.id);
         setNome(dados.nome);
-        setDataNascimento(dados.dataNascimento);
+        console.log(dados)
+        var data = dataNascimento.split('T')
+        setDataNascimento("2021-09-09");
+        console.log(dataNascimento)
         setSexo(dados.sexo);
       })
       .catch((error) => console.error(error));
@@ -60,11 +62,12 @@ const EditarUsuario = () => {
 
     // Especifica o objeto usuario
     let usuario = {
+      id: idUsuario,
       nome: nome,
       dataNascimento: dataNascimento,
       sexo: sexo,
     };
-    let urlRequest = url + "/Usuarios/" + idUsuario;
+    let urlRequest = `${url}/usuarios/${idUsuario}`;
     if (
       usuario.nome === "" ||
       usuario.dataNascimento === "" ||
@@ -100,7 +103,6 @@ const EditarUsuario = () => {
       }
     }
   };
-  console.log(idUsuario);
   return (
     <div>
       <Header />
@@ -157,9 +159,9 @@ const EditarUsuario = () => {
                       <option value="" disabled selected>
                         Selecione seu sexo
                       </option>
-                      <option value="Masculino">Masculino</option>
-                      <option value="Feminino">Feminino</option>
-                      <option value="Outros">Outros</option>
+                      <option value="M">Masculino</option>
+                      <option value="F">Feminino</option>
+                      <option value="O">Outros</option>
                     </select>{" "}
                   </div>
                 </div>
