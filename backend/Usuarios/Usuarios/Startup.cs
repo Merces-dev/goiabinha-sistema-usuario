@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,8 +29,11 @@ namespace Usuarios
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(ServiceLifetime.Scoped);
+            services.AddDbContext<DataContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
+
+            services.AddControllersWithViews().AddNewtonsoftJson();
 
             services.AddSwaggerGen(c =>
             {
@@ -61,18 +65,18 @@ namespace Usuarios
 
             app.UseAuthorization();
 
-                // Uso efetivamente do swagger
-                app.UseSwagger();
+            // Uso efetivamente do swagger
+            app.UseSwagger();
 
-                // Definição do endpoint e o nome da versão
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gerenciamento de Usuários V1");
-                });
+            // Definição do endpoint e o nome da versão
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gerenciamento de Usuários V1");
+            });
 
-                app.UseSwagger();
+            app.UseSwagger();
 
-                app.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });

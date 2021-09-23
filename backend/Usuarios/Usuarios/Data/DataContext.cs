@@ -9,10 +9,10 @@ namespace Usuarios.Data
 {
     public class DataContext:DbContext
     {
+        public DataContext(DbContextOptions<DataContext> options)
+      : base(options)
+        { }
         public DbSet<User> Users { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuider)
-        {
-            optionsBuider.UseSqlServer(@"Data Source = .\SQLEXPRESS;" + "Initial Catalog=GerenciamentoUsuarios; Integrated Security = True");
-        }
+
     }
 }

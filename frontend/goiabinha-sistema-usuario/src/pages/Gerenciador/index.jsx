@@ -175,7 +175,9 @@ const Gerenciador = (async) => {
       .then((dados) => {
         setIdUsuario(dados.id);
         setNome(dados.nome);
-        setDataNascimento(dados.dataNascimento);
+        let dataSplit = dados.dataNascimento.split("T")
+        let data = dataSplit[0]
+        setDataNascimento(data);
         setSexo(dados.sexo);
       })
       .catch((err) => console.error(err));
@@ -255,6 +257,9 @@ const Gerenciador = (async) => {
                   {
                     //*  Função que faz a listagem de todos os usuários em forma de lista
                     usuarios.map((item, index) => {
+                      // Pego somente a data do valor DateTime
+                      let dataSplit = item.dataNascimento.split("T")
+                      let data = dataSplit[0]
                       return (
                         <tr className="linhaTabela" key={index}>
                           <th className="elementoTabela">
@@ -267,7 +272,7 @@ const Gerenciador = (async) => {
                           </th>
                           <th className="elementoTabela">
                             <p className="mobileTipo">Data de Nascimento: </p>
-                            {item.dataNascimento}
+                            {data}
                           </th>
 
                           <th className="elementoTabela">
