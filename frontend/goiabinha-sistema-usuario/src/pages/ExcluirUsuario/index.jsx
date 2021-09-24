@@ -50,8 +50,9 @@ const ExcluirUsuario = () => {
         console.log(dados);
         setIdUsuario(dados.id);
         setNome(dados.nome);
-        setDataNascimento(dados.dataNascimento);
-        setSexo(dados.sexo);
+        var dataSplit = dados.dataNascimento.split('T')
+        let data = dataSplit[0]
+        setDataNascimento(data);        setSexo(dados.sexo);
       })
       .catch((error) => console.error(error));
   }
@@ -143,17 +144,16 @@ const ExcluirUsuario = () => {
       {isModalVisible ? (
         <Modal onClose={() => setIsModalVisible(false)} children={mensagem} />
       ) : null}
-      {/* {isModalConfirmacaoVisible ? (
+      {isModalConfirmacaoVisible ? (
         <ModalConfirmacao
           onClose={() => setIsModalConfirmacaoVisible(false)}
           onOk={(event) => {
             setIsModalConfirmacaoVisible(false);
             setIsFunctionAuthorized(true);
-            excluirUsuario(event)
           }}
           children={pergunta}
         />
-      ) : null} */}
+      ) : null}
       <Footer />
     </div>
   );

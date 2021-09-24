@@ -63,8 +63,6 @@ namespace Usuarios
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             // Uso efetivamente do swagger
             app.UseSwagger();
 

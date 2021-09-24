@@ -50,9 +50,10 @@ const EditarUsuario = () => {
         setIdUsuario(dados.id);
         setNome(dados.nome);
         console.log(dados)
-        var data = dataNascimento.split('T')
-        setDataNascimento("2021-09-09");
-        console.log(dataNascimento)
+        var dataSplit = dados.dataNascimento.split('T')
+        let data = dataSplit[0]
+        setDataNascimento(data);
+        console.log(data)
         setSexo(dados.sexo);
       })
       .catch((error) => console.error(error));

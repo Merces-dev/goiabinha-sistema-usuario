@@ -63,17 +63,18 @@ namespace Usuarios.Controllers
                 var usuario = await _context.Users
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.Id == id);
-                if(usuario != null)
+                if (usuario != null)
                 {
                     return Ok(usuario);
                 }
-                _logger.LogError("Erro ao buscar usuário, motivo: Id de usuário não cadastrado.");
+                _logger.LogWarning("Id de usuário não cadastrado:" + id);
                 return StatusCode((int)HttpStatusCode.NoContent);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Erro ao buscar usuário");
+
+                _logger.LogError(ex, "Erro ao buscar usuário.");
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
 
@@ -100,16 +101,17 @@ namespace Usuarios.Controllers
             }
             else
             {
-                _logger.LogError("Erro ao buscar usuário");
+                _logger.LogError("Erro ao buscar usuário.");
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
- 
+
         /// <summary>
         /// Excluir um usuário.
         /// </summary>
         /// <param name="id">Id do usuário</param>
         /// <response code="200">O usuário foi excluído com sucesso.</response>
+        /// <response code="204">Id não cadastrado.</response>
         /// <response code="400">Usuário não encontrado.</response>
         /// <response code="500">Erro do servidor.</response>
         /// <returns>Os dados do usuário excluso.</returns>
@@ -130,12 +132,12 @@ namespace Usuarios.Controllers
                     await _context.SaveChangesAsync();
                     return Ok(usuario);
                 }
-                _logger.LogError("Erro ao excluir usuário, motivo: Id de usuário não cadastrado.");
+                _logger.LogWarning("Id de usuário não cadastrado:" + id);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
             catch (Exception)
             {
-                _logger.LogError("Erro interno ao excluir usuário");
+                _logger.LogError("Erro interno ao excluir usuário.");
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
 
@@ -148,6 +150,7 @@ namespace Usuarios.Controllers
         /// <param name="model">Corpo do usuário.</param>
         /// <param name="id">Id do usuário</param>
         /// <response code="200">O dado do usuário foi modificado com sucesso.</response>
+        /// <response code="204">Id não cadastrado.</response>
         /// <response code="400">O modelo para a modificação de dados do usuário é inválido.</response>
         /// <response code="500">Erro do servidor.</response>
         /// <returns>Retorna o usuário com seus dados atualizados.</returns>
@@ -172,12 +175,12 @@ namespace Usuarios.Controllers
                     return Ok(usuario);
 
                 }
-                _logger.LogError("Erro ao atualizar dados do usuário, motivo: Id de usuário não cadastrado.");
+                _logger.LogWarning("Id de usuário não cadastrado:" + id);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
             catch (Exception)
             {
-                _logger.LogError("Erro interno ao atualizar dados do usuário");
+                _logger.LogError("Erro interno ao atualizar dados do usuário.");
 
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
@@ -214,23 +217,23 @@ namespace Usuarios.Controllers
                         var isValid = TryValidateModel(usuario);
                         if (!isValid)
                         {
-                            _logger.LogError("Modelo para a atualização de novo dado do usuário Inválido.");
+                            _logger.LogWarning("Modelo para a atualização de novo dado do usuário Inválido.");
                             return BadRequest(ModelState);
                         }
                         await _context.SaveChangesAsync();
 
                         return Ok(usuario);
                     }
-                    _logger.LogError("O modelo para a atualização de novo dado do usuário tem valor nulo.");
+                    _logger.LogWarning("O modelo para a atualização de novo dado do usuário tem valor nulo.");
                     return BadRequest();
                 }
-                _logger.LogError("Erro ao atualizar dado do usuário, motivo: Id de usuário não cadastrado.");
+                _logger.LogWarning("Id de usuário não cadastrado:" + id);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
             catch (Exception)
             {
 
-                _logger.LogError("Erro interno ao atualizar dados do usuário");
+                _logger.LogError("Erro interno ao atualizar dados do usuário.");
 
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }

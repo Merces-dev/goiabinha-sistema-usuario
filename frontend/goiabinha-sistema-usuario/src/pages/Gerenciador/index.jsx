@@ -59,7 +59,7 @@ const Gerenciador = (async) => {
       usuario.sexo === ""
     ) {
       setMensagem("Todos os campos devem ter valores");
-      setIsModalVisible(true);
+       setIsModalVisible(true);
     } else {
       if (method === "PUT") {
         setIsModalConfirmacaoVisible(true);
@@ -365,9 +365,9 @@ const Gerenciador = (async) => {
                 <option value="" disabled selected>
                   Selecione seu sexo
                 </option>
-                <option value="Masculino">Masculino</option>
-                <option value="Feminino">Feminino</option>
-                <option value="Outros">Outros</option>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+                <option value="O">Outros</option>
               </select>
               <input
                 className="buttonCrud arredondamento "
@@ -381,7 +381,7 @@ const Gerenciador = (async) => {
         {isModalVisible ? (
           <Modal onClose={() => setIsModalVisible(false)} children={mensagem} />
         ) : null}
-        {/* {isModalConfirmacaoVisible ? (
+        {isModalConfirmacaoVisible ? (
           <ModalConfirmacao
             onClose={() => setIsModalConfirmacaoVisible(false)}
             onOk={(event) => {
@@ -390,7 +390,7 @@ const Gerenciador = (async) => {
             }}
             children={pergunta}
           />
-        ) : null} */}
+        ) : null}
       </div>
       <Footer />
     </div>
