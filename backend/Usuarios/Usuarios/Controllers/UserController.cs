@@ -41,8 +41,18 @@ namespace Usuarios.Controllers
         [Route("usuarios")]
         public async Task<ActionResult<List<User>>> Get()
         {
-            var usuarios = await _context.Users.ToListAsync();
-            return Ok(usuarios);
+            try
+            {
+                var usuarios = await _context.Users.ToListAsync();
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, " - Erro ao buscar usuários.");
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+
         }
 
         /// <summary>
@@ -74,7 +84,7 @@ namespace Usuarios.Controllers
             catch (Exception ex)
             {
 
-                _logger.LogError(ex, "Erro ao buscar usuário.");
+                _logger.LogError(ex, " - Erro ao buscar usuário.");
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
 
@@ -93,15 +103,24 @@ namespace Usuarios.Controllers
         public async Task<ActionResult<User>> PostUser(
             [FromBody] User model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Users.Add(model);
-                await _context.SaveChangesAsync();
-                return Ok(model);
+                if (ModelState.IsValid)
+                {
+                    _context.Users.Add(model);
+                    await _context.SaveChangesAsync();
+                    return Ok(model);
+                }
+                else
+                {
+                    _logger.LogWarning("Modelo de JSON inválido: " + model);
+                    return StatusCode((int)HttpStatusCode.BadRequest);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _logger.LogError("Erro ao buscar usuário.");
+
+                _logger.LogError(ex, " - Erro ao adicionar usuário.");
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
         }
@@ -135,9 +154,10 @@ namespace Usuarios.Controllers
                 _logger.LogWarning("Id de usuário não cadastrado:" + id);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Erro interno ao excluir usuário.");
+
+                _logger.LogError(ex, " - Erro ao excluir usuário.");
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
 
@@ -178,9 +198,9 @@ namespace Usuarios.Controllers
                 _logger.LogWarning("Id de usuário não cadastrado:" + id);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Erro interno ao atualizar dados do usuário.");
+                _logger.LogError(ex, " - Erro interno ao atualizar dados do usuário.");
 
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }
@@ -230,10 +250,10 @@ namespace Usuarios.Controllers
                 _logger.LogWarning("Id de usuário não cadastrado:" + id);
                 return StatusCode((int)HttpStatusCode.NoContent);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                _logger.LogError("Erro interno ao atualizar dados do usuário.");
+                _logger.LogError(ex," - Erro interno ao atualizar dados do usuário.");
 
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             }

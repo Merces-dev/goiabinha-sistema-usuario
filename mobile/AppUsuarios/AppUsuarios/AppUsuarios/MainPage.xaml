@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppUsuarios.MainPage"
+             Title="Home"
+             NavigationPage.HasNavigationBar="false">
+
+
+    <Grid BackgroundColor="#535556">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition  Height="40"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Image Source = "logo" Grid.Row="1" />
+        <FlexLayout Direction="Column"
+                    AlignItems="Center"
+                    JustifyContent="Center" Grid.Row="2" >
+
+            <Button Text="Visualizar Usuários" Clicked="Botao_Pagina_Adicionar" 
+                BackgroundColor="#dcd8d8" TextColor="#535556" FontSize="17" Margin="5" WidthRequest="300" CornerRadius="4"  Image="userlist"/>
+            
+            <Button Text="Adicionar Usuário" Clicked="Botao_Pagina_Adicionar" 
+                BackgroundColor="#dcd8d8" TextColor="#535556" FontSize="17" Margin="5" WidthRequest="300" CornerRadius="4"  Image="add"/>
+        </FlexLayout>
+
+    </Grid>
+
+
+        
+
+
+
+
+</ContentPage>

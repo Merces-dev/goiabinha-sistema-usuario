@@ -62,7 +62,6 @@ const Gerenciador = (async) => {
        setIsModalVisible(true);
     } else {
       if (method === "PUT") {
-        setIsModalConfirmacaoVisible(true);
         setPergunta("Deseja mesmo atualizar os dados deste usuário ?");
 
         if (window.confirm("Deseja mesmo atualizar os dados deste usuário ?")) {
