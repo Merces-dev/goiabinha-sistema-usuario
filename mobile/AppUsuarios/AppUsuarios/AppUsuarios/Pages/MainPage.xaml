@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppUsuarios.MainPage"
-             Title="Home"
              NavigationPage.HasNavigationBar="false">
 
 
@@ -20,7 +19,7 @@
                     AlignItems="Center"
                     JustifyContent="Center" Grid.Row="2" >
 
-            <Button Text="Visualizar Usuários" Clicked="Botao_Pagina_Adicionar" 
+            <Button Text="Visualizar Usuários" Clicked="Botao_Pagina_Visualizar" 
                 BackgroundColor="#dcd8d8" TextColor="#535556" FontSize="17" Margin="5" WidthRequest="300" CornerRadius="4"  Image="userlist"/>
             
             <Button Text="Adicionar Usuário" Clicked="Botao_Pagina_Adicionar" 

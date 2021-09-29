@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppUsuarios.AddUserPage"
+             Title="Adicionar Usuário">
+    <Grid BackgroundColor="#dcd8d8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <FlexLayout Direction="Column"
+                    AlignItems="Center"
+                    JustifyContent="Center" 
+                    Grid.Row="2"
+                    >
+
+
+            <Label WidthRequest="300"
+                   Margin="1, 10,0,0"
+                   FontSize="15"
+                >
+                Digite o nome
+            </Label>
+            <Frame
+                   Padding = "2"
+                   CornerRadius     ="4"
+                   Margin="0, 10,0,0"
+            >
+                
+                <Entry Placeholder="Nome" 
+                       FontSize="15"
+                       WidthRequest="300"
+                       BackgroundColor="White"
+                       x:Name="Nome" 
+                       Keyboard="Text"/>
+            </Frame>
+
+
+
+            <Label WidthRequest="300"
+                   Margin="1, 10,0,0"
+                   FontSize="15"
+                >
+                Selecione a data de nascimento
+            </Label>
+            <Frame
+                   Padding = "2"
+                   CornerRadius     ="4"
+                   Margin="0, 10,0,0"
+
+                >
+               
+                <DatePicker WidthRequest="300" 
+                            FontSize="15"
+                            BackgroundColor="White"
+                            x:Name="DataNascimento"/>
+            </Frame>
+
+
+
+            <Label WidthRequest="300"
+                   Margin="1, 10,0,0"
+                   FontSize="15"
+                >
+                Selecione um sexo
+            </Label>
+            <Frame
+                   Padding = "2"
+                   CornerRadius="4"
+                   Margin="0, 5,0,0"
+
+                   >
+                <Picker Title="Sexo"    
+                       WidthRequest="300" 
+                       FontSize="15"
+                       BackgroundColor="White"
+                       x:Name="Sexo">
+                    <Picker.Items>
+                        <x:String>Masculino</x:String>
+                        <x:String>Feminino</x:String>
+                        <x:String>Outros</x:String>
+
+                    </Picker.Items>
+                </Picker>   
+            </Frame>
+            
+            
+            
+            <Button Text="Adicionar Usuário" 
+                    BackgroundColor="#FE7B1D" 
+                    TextColor="#dcd8d8" 
+                    FontSize="17" 
+                    Margin="0, 25, 0,0" 
+                    Padding="10"
+                    WidthRequest="300" 
+                    CornerRadius="4"  
+                    Image="add"/>
+        </FlexLayout>
+
+    </Grid>
+</ContentPage>
