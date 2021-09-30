@@ -20,10 +20,10 @@ namespace AppUsuarios
         public VisualizeUsers()
         {
             InitializeComponent();
-            //Troca a cor da barra de navegação
-
             dataService = new DataService();
             ListarDados();
+
+            //Troca a cor da barra de navegação
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#535556");
 
         }
@@ -44,5 +44,6 @@ namespace AppUsuarios
             }
 
         }
+
     }
 }

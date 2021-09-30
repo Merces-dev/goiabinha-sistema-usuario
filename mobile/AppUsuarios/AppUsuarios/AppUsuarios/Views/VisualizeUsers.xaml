@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppUsuarios.VisualizeUsers"
+             Title="Visualizar Usuários">
+    <ContentPage.Content>
+
+            <ListView x:Name="listaUsuarios"
+                  ItemSelected="AbrirPaginaAtualizarExcluir"
+                  HasUnevenRows="True"
+                  BackgroundColor="White"
+                  >
+
+                <ListView.ItemTemplate>
+                
+                    <DataTemplate >
+
+                        <ViewCell Height="140">
+                        <Frame BackgroundColor="White" Padding="11,5,11,5" >
+                            <Frame Padding="0" CornerRadius="4">
+                            <FlexLayout AlignItems="Start" 
+                                    JustifyContent="Start"
+                                    Direction="Column"
+                                    Padding="0,0,10,10"
+                                    BackgroundColor="#535556"
+                                    >
+                                    <Frame Padding="0"  
+                                           HorizontalOptions="FillAndExpand"
+                                           WidthRequest="400"
+                                           BackgroundColor="#FE7B1D"
+                                           >
+                                        <FlexLayout Padding="0" 
+                                                    Margin="0" 
+                                                    HeightRequest="50"
+                                                    AlignItems="Center" 
+                                                    JustifyContent="SpaceBetween"
+                                                    Direction="Row">
+                                            <Label FontSize="18.5" Text="{Binding Nome}" FontAttributes="Bold" TextColor="#FFF" Margin="20,7,20,7" Padding="0,0,120,0" />
+                                            <Image Source="plus"                  RelativeLayout.XConstraint="40"
+                 RelativeLayout.YConstraint="20"/>
+                                        </FlexLayout>
+                                    </Frame>
+                                    <Label Text="{Binding Id}" FontSize="15"   TextTransform="Default"  Margin="10,10,70,0" TextColor="White"/>
+
+                            <Label HorizontalOptions="Center"
+                                   FontSize="15" 
+                                   VerticalOptions="Center"
+                                   TextColor="White"                                   
+                                   Margin="10,0,0,0"
+                                   >
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Data de Nascimento: "  />
+                                        <Span Text="{Binding DataNascimento.Day}"   />
+                                        <Span Text="/"  />
+                                        <Span Text="{Binding DataNascimento.Month}"  />
+                                        <Span Text="/"  />
+                                        <Span Text="{Binding DataNascimento.Year}"  />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   TextColor="White"
+                                   Margin="10,0,0,0"
+                                   >
+                                <Label.FormattedText>
+                                    <FormattedString>
+
+                                        <Span Text="Sexo: "  />
+                                        <Span Text="{Binding Sexo}"  />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                                    </FlexLayout>
+                            
+                            </Frame>
+                        </Frame>
+
+                    </ViewCell>
+                        
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+                
+        </ListView>
+
+    </ContentPage.Content>
+</ContentPage>

@@ -144,7 +144,7 @@ const ExcluirUsuario = () => {
       {isModalVisible ? (
         <Modal onClose={() => setIsModalVisible(false)} children={mensagem} />
       ) : null}
-      {isModalConfirmacaoVisible ? (
+      {/* {isModalConfirmacaoVisible ? (
         <ModalConfirmacao
           onClose={() => setIsModalConfirmacaoVisible(false)}
           onOk={(event) => {
@@ -153,7 +153,7 @@ const ExcluirUsuario = () => {
           }}
           children={pergunta}
         />
-      ) : null}
+      ) : null} */}
       <Footer />
     </div>
   );

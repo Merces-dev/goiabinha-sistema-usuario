@@ -35,7 +35,7 @@
                        FontSize="15"
                        WidthRequest="300"
                        BackgroundColor="White"
-                       x:Name="Nome" 
+                       x:Name="_Nome" 
                        Keyboard="Text"/>
             </Frame>
 
@@ -57,7 +57,7 @@
                 <DatePicker WidthRequest="300" 
                             FontSize="15"
                             BackgroundColor="White"
-                            x:Name="DataNascimento"/>
+                            x:Name="_DataNascimento"/>
             </Frame>
 
 
@@ -78,7 +78,7 @@
                        WidthRequest="300" 
                        FontSize="15"
                        BackgroundColor="White"
-                       x:Name="Sexo">
+                       x:Name="_Sexo">
                     <Picker.Items>
                         <x:String>Masculino</x:String>
                         <x:String>Feminino</x:String>
@@ -92,13 +92,14 @@
             
             <Button Text="Adicionar Usuário" 
                     BackgroundColor="#FE7B1D" 
-                    TextColor="#dcd8d8" 
+                    TextColor="#fff" 
                     FontSize="17" 
                     Margin="0, 25, 0,0" 
                     Padding="10"
                     WidthRequest="300" 
                     CornerRadius="4"  
-                    Image="add"/>
+                    Clicked="buttonAdicionarUsuario"
+                    Image="plus"/>
         </FlexLayout>
 
     </Grid>
