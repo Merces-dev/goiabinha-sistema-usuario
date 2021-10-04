@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppUsuarios.ModelViews;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,26 +14,9 @@ namespace AppUsuarios
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new MainPageModelView();
+
         }
 
-        /// <summary>
-        /// Redireciona até a página de Adicionar Usuário
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Botao_Pagina_Adicionar(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AddUserPage());
-        }
-
-        /// <summary>
-        /// Redireciona até a página de Visualizar Usuários
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Botao_Pagina_Visualizar(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new VisualizeUsers());
-        }
     }
 }

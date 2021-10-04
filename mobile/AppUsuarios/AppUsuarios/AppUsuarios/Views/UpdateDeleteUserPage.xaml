@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppUsuarios.Pages.UpdateDeleteUserPage">
     <NavigationPage.TitleView>
-        <Label x:Name="_Id" Text="{Binding Id}" FontSize="15" TextColor="White" />
+        <Label Text="{Binding Id}" FontSize="15" TextColor="White" x:Name="id"/>
     </NavigationPage.TitleView>
 
     <Grid BackgroundColor="#dcd8d8">
@@ -38,7 +38,7 @@
                        FontSize="15"
                        WidthRequest="300"
                        BackgroundColor="White"
-                       x:Name="_Nome" 
+                       Text="{Binding Nome}"
                        Keyboard="Text"/>
             </Frame>
 
@@ -59,8 +59,8 @@
 
                 <DatePicker WidthRequest="300" 
                             FontSize="15"
+                            Date="{Binding DataNascimento}"
                             BackgroundColor="White"
-                            x:Name="_DataNascimento"
                             />
             </Frame>
 
@@ -82,7 +82,7 @@
                        WidthRequest="300" 
                        FontSize="15"
                        BackgroundColor="White"
-                       x:Name="_Sexo"
+                       SelectedIndex="{Binding Sexo}"
                         >
                     <Picker.Items>
                         <x:String>Masculino</x:String>
@@ -101,21 +101,21 @@
                     FontSize="17" 
                     Margin="0, 25, 0,0" 
                     Padding="10"
-                    Clicked="BotaoAtualizar"
+                    Command="{Binding AtualizarUsuario}"
                     WidthRequest="300" 
                     CornerRadius="4"  
-                    Image="add"/>
+                    Image="update"/>
             
             <Button Text="Excluir Usuário" 
-                    BackgroundColor="#535556" 
+                    BackgroundColor="#ff2400" 
                     TextColor="#fff" 
                     FontSize="17" 
                     Margin="0, 25, 0,0" 
                     Padding="10"
-                    Clicked="BotaoExcluir"
+                    Command="{Binding ExcluirUsuario}"
                     WidthRequest="300" 
                     CornerRadius="4"  
-                    Image="add"/>
+                    Image="delete"/>
         </FlexLayout>
 
     </Grid>

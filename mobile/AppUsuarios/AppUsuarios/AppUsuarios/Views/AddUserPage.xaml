@@ -35,7 +35,7 @@
                        FontSize="15"
                        WidthRequest="300"
                        BackgroundColor="White"
-                       x:Name="_Nome" 
+                       Text="{Binding Nome}"
                        Keyboard="Text"/>
             </Frame>
 
@@ -56,8 +56,10 @@
                
                 <DatePicker WidthRequest="300" 
                             FontSize="15"
+                            Format="dd/MM/yyyy"
+                            MinimumDate="{Binding DataMinimo}"
                             BackgroundColor="White"
-                            x:Name="_DataNascimento"/>
+                            Date="{Binding DataNascimento}"/>
             </Frame>
 
 
@@ -65,6 +67,7 @@
             <Label WidthRequest="300"
                    Margin="1, 10,0,0"
                    FontSize="15"
+                   
                 >
                 Selecione um sexo
             </Label>
@@ -78,7 +81,7 @@
                        WidthRequest="300" 
                        FontSize="15"
                        BackgroundColor="White"
-                       x:Name="_Sexo">
+                       SelectedIndex="{Binding Sexo}">
                     <Picker.Items>
                         <x:String>Masculino</x:String>
                         <x:String>Feminino</x:String>
@@ -91,6 +94,7 @@
             
             
             <Button Text="Adicionar Usuário" 
+                    Command="{Binding AdicionarUsuario}"
                     BackgroundColor="#FE7B1D" 
                     TextColor="#fff" 
                     FontSize="17" 
@@ -98,7 +102,6 @@
                     Padding="10"
                     WidthRequest="300" 
                     CornerRadius="4"  
-                    Clicked="buttonAdicionarUsuario"
                     Image="plus"/>
         </FlexLayout>
 

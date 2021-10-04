@@ -19,10 +19,10 @@
                     AlignItems="Center"
                     JustifyContent="Center" Grid.Row="2" >
 
-            <Button Text="Visualizar Usuários" Clicked="Botao_Pagina_Visualizar" 
+            <Button Text="Visualizar Usuários" Command="{Binding RedirecionarVisualizarUsuario}" 
                 BackgroundColor="#dcd8d8" TextColor="#535556" FontSize="17" Margin="5" WidthRequest="300" CornerRadius="4"  Image="userlist"/>
-            
-            <Button Text="Adicionar Usuário" Clicked="Botao_Pagina_Adicionar" 
+
+            <Button Text="Adicionar Usuário"  Command="{Binding RedirecionarAdicionarUsuario}" 
                 BackgroundColor="#dcd8d8" TextColor="#535556" FontSize="17" Margin="5" WidthRequest="300" CornerRadius="4"  Image="add"/>
         </FlexLayout>
 

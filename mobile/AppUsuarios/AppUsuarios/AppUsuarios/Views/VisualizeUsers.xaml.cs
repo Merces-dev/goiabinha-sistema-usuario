@@ -1,5 +1,6 @@
 ﻿using AppUsuarios.Data;
 using AppUsuarios.Models;
+using AppUsuarios.ModelViews;
 using AppUsuarios.Pages;
 using System;
 using System.Collections.Generic;
@@ -15,35 +16,32 @@ namespace AppUsuarios
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class VisualizeUsers : ContentPage
     {
-        DataService dataService;
-        List<User> usuarios;
+
         public VisualizeUsers()
         {
             InitializeComponent();
-            dataService = new DataService();
-            ListarDados();
-
+            BindingContext = new VisualizeUserModelView();
             //Troca a cor da barra de navegação
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#535556");
 
         }
-
-        async void ListarDados()
+        protected override void OnAppearing()
         {
-            usuarios = await dataService.GetUsersAsync();
-            listaUsuarios.ItemsSource = usuarios.ToList();
-        }
+            var vm = (VisualizeUserModelView)BindingContext;
 
-        public async void AbrirPaginaAtualizarExcluir (object sender, SelectedItemChangedEventArgs e)
+            vm.AtualizarLista.Execute(null);
+        }
+        /// <summary>
+        /// Coleta o id do usuario e o envia para a ViewModel.
+        /// </summary>
+
+        public  void AbrirPaginaAtualizarExcluirViewModel(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem != null)
-            {
-                var user = e.SelectedItem as User;
-                listaUsuarios.SelectedItem = null;
-                await Navigation.PushAsync(new UpdateDeleteUserPage(user));
-            }
+
+            var user = (User)e.SelectedItem;
+            var vm = (VisualizeUserModelView)BindingContext;
+            vm.AbrirPaginaAtualizarExcluir.Execute(user);
 
         }
-
     }
 }

@@ -18,13 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Pages\AddUserPage.xaml">
+    <EmbeddedResource Update="Views\AddUserPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\UpdateDeleteUserPage.xaml">
+    <EmbeddedResource Update="Views\UpdateDeleteUserPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\VisualizeUsers.xaml">
+    <EmbeddedResource Update="Views\VisualizeUsers.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
