@@ -18,7 +18,7 @@ namespace AppUsuarios.ModelViews
         List<User> response;
 
         /**
-         * Coleção que armazena as atividades do usuário.
+         * Coleção que armazena os usuários.
          */
         ObservableCollection<User> listaUsuarios = new ObservableCollection<User>();
         public ObservableCollection<User> ListaUsuarios

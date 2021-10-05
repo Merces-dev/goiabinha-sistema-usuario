@@ -59,6 +59,8 @@
 
                 <DatePicker WidthRequest="300" 
                             FontSize="15"
+                            Format="dd/MM/yyyy"
+                            MaximumDate="{Binding DataMinimo}"
                             Date="{Binding DataNascimento}"
                             BackgroundColor="White"
                             />
