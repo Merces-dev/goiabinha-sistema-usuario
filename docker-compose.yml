@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+    mssql:
+        container_name: "usuarios-api-database"
+        build:
+          context: ./database/
+          dockerfile: Dockerfile  
+        environment:
+          SA_PASSWORD: "1q2w3e4r@AB"
+          ACCEPT_EULA: "Y"
+        ports:
+          - 1433:1433
+          
+    usuarios-api:
+        build:
+          context: ./backend/Usuarios/Usuarios
+          dockerfile: Dockerfile  
+        container_name: "usuarios-api"
+        ports:
+          - 5000:5000
+        environment:
+          ASPNETCORE_ENVIRONMENT: Development
+        depends_on:
+          - mssql
+

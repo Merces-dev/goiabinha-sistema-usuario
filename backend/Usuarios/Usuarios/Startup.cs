@@ -66,10 +66,10 @@ namespace Usuarios
             // Uso efetivamente do swagger
             app.UseSwagger();
 
-            // Definição do endpoint e o nome da versão
+            // Definiï¿½ï¿½o do endpoint e o nome da versï¿½o
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gerenciamento de Usuários V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gerenciamento de Usuï¿½rios V1");
             });
 
             app.UseSwagger();
